@@ -16,3 +16,4 @@ testdir/Build.PL
 testdir/MANIFEST
 testdir/bad_makefile/Makefile.PL
 META.yml                                 Module meta-data (added by MakeMaker)
+README
