@@ -16,7 +16,7 @@ Test::Prereq::ModuleBuild - test prerequisites in Module::Bulid scripts
 
 =cut
 
-$VERSION = '0.03';
+$VERSION = '0.04';
 @EXPORT = qw( prereq_ok );
 
 use Module::Build;

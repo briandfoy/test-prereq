@@ -81,7 +81,7 @@ use base qw(Exporter);
 use vars qw($VERSION $EXCLUDE_CPANPLUS @EXPORT @prereqs);
 
 
-$VERSION = '0.18';
+$VERSION = '0.19';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);

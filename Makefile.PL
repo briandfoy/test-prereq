@@ -21,9 +21,9 @@ WriteMakefile
 			'Module::Info'          => '0',
 			'Test::Builder'         => '0',
 			'Test::Builder::Tester' => '0',
-			'Test::Manifest'        => '0.9',
+			'Test::Manifest'        => '0.91',
 			'Test::More'            => '0',
-			'Test::Pod'             => '0',
+			'Test::Pod'             => '0.90',
 			},
         'PM'        => 
 			{
