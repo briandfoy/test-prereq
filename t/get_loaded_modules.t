@@ -12,7 +12,7 @@ ok(
   eq_array( $keys, 
 		[ 
 		qw( File::Find::Rule Module::Build Module::CoreList Module::Info 
-		Test::Builder Test::More Test::Pod Test::Prereq ) 
+		Test::Builder Test::More Test::Pod Test::Prereq Test::Prereq::Build) 
 		] ),
 	'Right modules for modules and tests'
 	);

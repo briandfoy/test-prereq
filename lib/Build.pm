@@ -39,20 +39,27 @@ You can use this software under the same terms as Perl itself.
 
 =cut
 
-sub Module::Build::Base::create_build_script 
+sub _master_file { 'Build.PL' }
+
+# override Module::Build
+sub Module::Build::new
 	{
-	my $self = shift;
+	my $class = shift;
 	
-	my %requires = (
-		%{ $self->{properties}{requires} },
-		%{ $self->{properties}{build_requires} },
+	my %hash = @_;
+	
+	my @requires = sort grep $_ ne 'perl', (
+		keys %{ $hash{requires} }, 
+		keys %{ $hash{build_requires} },
 		);
 
-	delete $requires{perl};
-
-	@Test::Prereq::prereqs = sort keys %requires;
+	@Test::Prereq::prereqs = @requires;
+	
+	# intercept further calls to this object
+	return bless {}, __PACKAGE__;
 	}
 
-sub _master_file { 'Build.PL' }
+# fake Module::Build methods
+sub create_build_script { 1 };
 
 1;

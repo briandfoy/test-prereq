@@ -180,7 +180,12 @@ sub _get_prereqs
 	my $file = $self->_master_file;
 	
 	delete $INC{$file};  # make sure we load it again
-	return unless eval { eval "require '$file'" };
+	unless( eval { eval "require '$file'" } )
+		{
+		print STDERR $@;
+		return;
+		}
+		
 	delete $INC{$file};  # pretend we were never here
 
 	my @modules = sort @Test::Prereq::prereqs;
@@ -188,6 +193,7 @@ sub _get_prereqs
 	return \@modules;
 	}
 	
+# get all the loaded modules.  we'll filter this later
 sub _get_loaded_modules
 	{
 	my $self = shift;
