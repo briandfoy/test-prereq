@@ -1,5 +1,9 @@
 # $Id$
 
+1.026 - Fri Mar  4 08:09:41 2005
+* Documentation fix for command line invocation: Test::Prereq
+calls plan() for you, so you don't have to.
+
 1.025 - Wed Sep  8 00:59:57 2004
 * get rid of the 'redefine' warning when we read the Makefile.PL
 
