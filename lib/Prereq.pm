@@ -36,7 +36,7 @@ you when you don't.
 use base qw(Exporter);
 use vars qw($VERSION @EXPORT @prereqs);
 
-$VERSION = '0.10';
+$VERSION = '0.11';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);
@@ -97,10 +97,14 @@ my $version         = '5.006001';
 
 sub prereq_ok
 	{
-	my $object   = {};
-	bless $object, __PACKAGE__;
+	__PACKAGE__->_prereq_check( @_ );
+	}
 	
-	   $version  = shift || '5.006001';
+sub _prereq_check
+	{
+	my $class   = shift;
+	
+	   $version  = shift || $default_version;
 	my $name     = shift || 'Prereq test';
 	my $skip     = shift || [];
 	
@@ -113,18 +117,16 @@ sub prereq_ok
 		return;
 		}
 		
-	my $prereqs = $object->_get_prereqs();
+	my $prereqs = $class->_get_prereqs();
 	unless( $prereqs )
 		{
 		$Test->ok( 0, $name );
-		$Test->diag( "\tMakefile.PL did not return a true value.\n",
-			"\tYou don't need to do that unless you want to use Test::Prereq,\n",
-			"\tand apparently you do :)\n",
-			"\t$@\n", );
+		$Test->diag( "\t" . 
+			$class->_master_file . " did not return a true value.\n" );
 		return 0;
 		}
 	
-	my $loaded = $object->_get_loaded_modules( 'blib/lib', 't' );
+	my $loaded = $class->_get_loaded_modules( 'blib/lib', 't' );
 	unless( $loaded )
 		{
 		$Test->ok( 0, $name );
@@ -141,14 +143,14 @@ sub prereq_ok
 		}
 
 	# remove modules found in distribution	
-	my $distro = $object->_get_dist_modules( 'blib/lib' );
+	my $distro = $class->_get_dist_modules( 'blib/lib' );
 	foreach my $module ( @$distro )
 		{
 		delete $loaded->{$module};
 		}
 
 	# remove modules found in test directory	
-	$distro = $object->_get_test_libraries();
+	$distro = $class->_get_test_libraries();
 	foreach my $module ( @$distro )
 		{
 		delete $loaded->{$module};
@@ -176,8 +178,8 @@ sub _master_file { 'Makefile.PL' }
 
 sub _get_prereqs
 	{
-	my $self = shift;
-	my $file = $self->_master_file;
+	my $class = shift;
+	my $file = $class->_master_file;
 	
 	delete $INC{$file};  # make sure we load it again
 	unless( eval { eval "require '$file'" } )
@@ -196,7 +198,7 @@ sub _get_prereqs
 # get all the loaded modules.  we'll filter this later
 sub _get_loaded_modules
 	{
-	my $self = shift;
+	my $class = shift;
 
 	return unless( defined $_[0] and defined $_[1] );
 	return unless( -d $_[0] and -d $_[1] );
@@ -208,7 +210,7 @@ sub _get_loaded_modules
 	my @found = ();
 	foreach my $file ( @files )
 		{
-		push @found, @{ $self->_get_from_file( $file ) };
+		push @found, @{ $class->_get_from_file( $file ) };
 		}
 		
 	return { map { $_, 1 } @found };
@@ -216,7 +218,7 @@ sub _get_loaded_modules
 
 sub _get_test_libraries
 	{
-	my $self = shift;
+	my $class = shift;
 
 	my $dirsep = "/";
 
@@ -234,7 +236,7 @@ sub _get_test_libraries
 		
 sub _get_dist_modules
 	{
-	my $self = shift;
+	my $class = shift;
 
 	return unless( defined $_[0] and -d $_[0] );
 	
@@ -257,7 +259,7 @@ sub _get_dist_modules
 	
 sub _get_from_file
 	{
-	my $self = shift;
+	my $class = shift;
 
 	my $file = shift;
 	
