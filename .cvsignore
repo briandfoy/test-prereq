@@ -4,4 +4,4 @@ Test-Prereq-*
 blib
 pm_to_blib
 Makefile
-*.bak
+*.bakMETA.yml
