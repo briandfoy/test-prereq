@@ -246,7 +246,7 @@ sub _get_from_file
 	my $module = Module::Info->new_from_file( $file );
 	
 	my @used = $module->modules_used;
-		
+	
 	my @modules = 
 		sort 
 		grep { not exists $Module::CoreList::version{$version}{$_} }

@@ -9,3 +9,4 @@ t/pod.t
 t/prereq_ok.t
 t/test_manifest
 testdir/bad_makefile/Makefile.PL
+Changes

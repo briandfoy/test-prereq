@@ -7,24 +7,24 @@ my $tests = do {
 	};
 
 WriteMakefile
-        (
-        'NAME'      => 'Test::Prereq',
-        'VERSION'   => '0.06',
- 		'PREREQ_PM' => {
- 			'File::Find::Rule'      => 0,
- 			'Module::Info'          => 0,
- 			'Module::CoreList'      => 0,
- 			'Test::More'            => 0,
- 			'Test::Pod'             => 0,
- 			'Test::Builder::Tester' => 0,
- 			'Test::Builder'         => 0,
- 			},
+		(
+		'NAME'      => 'Test::Prereq',
+		'VERSION'   => '0.07',
+		'PREREQ_PM' => {
+			'File::Find::Rule'      => '0',
+			'Module::Info'          => '0',
+			'Module::CoreList'      => '0',
+			'Test::More'            => '0',
+			'Test::Pod'             => '0',
+			'Test::Builder::Tester' => '0',
+			'Test::Builder'         => '0',
+			},
         'PM'        => 
-        	{
-            'lib/Prereq.pm' => '$(INST_LIBDIR)/Prereq.pm',
-            },
- 
+			{
+			'lib/Prereq.pm' => '$(INST_LIBDIR)/Prereq.pm',
+			},
+
 		depend => { Makefile => 't/test_manifest' },
-        test   => { TESTS => $tests },
-        );
+		test   => { TESTS => $tests },
+		);
 
