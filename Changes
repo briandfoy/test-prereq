@@ -1,5 +1,9 @@
 # $Id$
 
+0.13 Wed Oct  9 19:37:47 EDT 2002
+	- expands distributions in PREREQ_PM to look for
+	modules implicitly declared
+
 0.10 Fri Oct  4 18:27:57 CDT 2002
 	- added support for Module::Build
 

@@ -67,7 +67,7 @@ files do not compile anyway.
 use base qw(Exporter);
 use vars qw($VERSION @EXPORT @prereqs);
 
-$VERSION = '0.12';
+$VERSION = '0.13';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);
