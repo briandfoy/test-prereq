@@ -24,7 +24,7 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 	prereq_ok();
 
 	# or from the command line for a one-off check
-	perl -MTest::More=tests,1 -MTest::Prereq -eprereq_ok
+	perl -MTest::More -MTest::Prereq -eprereq_ok
 
 =head1 DESCRIPTION
 
@@ -52,7 +52,7 @@ fetches the right things, it should be much faster.
 
 =head2 Problem with Module::Info
 
-Module::Info appears to do something wierd if a file it analyzes
+Module::Info appears to do something weird if a file it analyzes
 does not use (or require) any modules.  You may get a message like
 
   Can't locate object method "name" via package "B::NULL" at
@@ -64,7 +64,7 @@ files do not compile, though.
 
 =head2 Problem with CPANPLUS
 
-CPANPLUS apparently does some wierd things, and since it is still
+CPANPLUS apparently does some weird things, and since it is still
 young and not part of the Standard Library, Test::Prereq's tests do
 not do the right thing under it (for some reason).  Test::Prereq
 cheats by ignoring CPANPLUS completely in the tests---at least until

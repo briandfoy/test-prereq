@@ -1,4 +1,6 @@
+# $Id$
 load.t
 pod.t
+pod_coverage.t
 import.t
 get_from_file.t
