@@ -1,5 +1,11 @@
 # $Id$
 
+1.024 - Tue Sep  7 19:52:30 2004
+* cleaned up distro
+* bumped version to a full release (the interface is pretty much set)
+* no need to upgrade really (although some modules might require a
+version number above 1.x
+
 0.23 - Tue Aug 24 19:58:53 2004
 * Changed a few things for demo talk
 
