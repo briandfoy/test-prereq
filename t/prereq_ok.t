@@ -1,4 +1,5 @@
 # $Id$
+local $^W = 0;
 
 use Test::More;
 eval "use Test::Prereq";

@@ -10,8 +10,7 @@ my @modules = grep ! /^CPANPLUS/, @$modules;
 print STDERR "Did not find right modules from t/pod.t!\n" .
 	"Found <@modules>\n" unless
 	ok(
-		eq_array( \@modules, 
-			[ qw(Test::More) ] ),
+		eq_array( \@modules, [] ),
 			'Right modules for t/pod.t'
 			);
 
@@ -22,7 +21,6 @@ print STDERR "Did not find right modules for lib/Prereq.pm!\n" .
 	 "Found <@modules>\n" unless
 		ok(
 			eq_array( \@modules, [ 
-			qw( File::Find::Rule Module::CoreList 
-				Module::Info Test::Builder ) ] ),
+			qw( Module::CoreList Module::Info ) ] ),
 			'Right modules for t/Prereq.pm'
 			);

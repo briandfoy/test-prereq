@@ -13,8 +13,8 @@ print STDERR "Didn't find right modules! Found < @$keys >\n" unless
 ok(
   eq_array( $keys, 
 		[ 
-		qw( File::Find::Rule Module::Build Module::CoreList Module::Info 
-		Test::Builder Test::More Test::Prereq Test::Prereq::Build) 
+		qw( Module::Build Module::CoreList Module::Info 
+			Test::Prereq Test::Prereq::Build) 
 		] ),
 	'Right modules for modules and tests'
 	);

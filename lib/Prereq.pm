@@ -88,14 +88,14 @@ use base qw(Exporter);
 use vars qw($VERSION $EXCLUDE_CPANPLUS @EXPORT @prereqs);
 
 
-$VERSION = '0.21';
+$VERSION = '0.23';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);
 use CPAN;
 use Exporter;
 use ExtUtils::MakeMaker;
-use File::Find::Rule;
+use File::Find;
 use Module::CoreList;
 use Module::Info;
 use Test::Builder;
@@ -106,7 +106,10 @@ my $Namespace = '';
 
 $EXCLUDE_CPANPLUS = 1;
 
-sub ExtUtils::MakeMaker::WriteMakefile
+{
+no warnings;
+
+* ExtUtils::MakeMaker::WriteMakefile = sub
 	{
 	my %hash = @_;
 
@@ -116,6 +119,7 @@ sub ExtUtils::MakeMaker::WriteMakefile
 	$Namespace = $name;
 	@Test::Prereq::prereqs   = sort keys %$hash;
 	}
+}
 
 =head1 FUNCTIONS
 
@@ -280,13 +284,17 @@ sub _get_prereqs
 
 	delete $INC{$file};  # make sure we load it again
 
+	{
+	no warnings;
+	
 	unless( do "./$file" )
 		{
 		print STDERR "_get_prereqs: Error loading $file: $!";
 		return;
 		}
 	delete $INC{$file};  # pretend we were never here
-
+	}
+	
 	my @modules = sort @Test::Prereq::prereqs;
 	@Test::Prereq::prereqs = ();
 	return \@modules;
@@ -324,13 +332,17 @@ sub _get_loaded_modules
 #	return unless( defined $_[0] and defined $_[1] );
 #	return unless( -d $_[0] and -d $_[1] );
 
-	my @files = File::Find::Rule->file()->name( '*.pm' )->in( 'blib/lib' );
-
-	push @files, File::Find::Rule->file()->name( '*.t' )->in( 't' );
-	push @files, File::Find::Rule->file()->in( 'blib/script' );
-
+	my( @libs, @t, @scripts );
+	
+	find( sub { push @libs,    $File::Find::name if m/\.pm$/ }, 'blib/lib' )
+		if -e 'blib/lib';
+	find( sub { push @t,       $File::Find::name if m/\.t$/  }, 't' )
+		if -e 't';
+	find( sub { push @scripts, $File::Find::name if -f $_    }, 'blib/script' )
+		if -e 'blib/script';
+	
 	my @found = ();
-	foreach my $file ( @files )
+	foreach my $file ( @libs, @t, @scripts )
 		{
 		push @found, @{ $class->_get_from_file( $file ) };
 		}
@@ -344,6 +356,10 @@ sub _get_test_libraries
 
 	my $dirsep = "/";
 
+	my @found = ();
+	
+	find( sub { push @found, $File::Find::name if m/\.p(l|m)$/ }, 't' );
+
 	my @files =
 		map {
 			my $x = $_;
@@ -351,7 +367,7 @@ sub _get_test_libraries
 			$x =~ s|$dirsep|::|g;
 			$x;
 			}
-			File::Find::Rule->file()->name( '*.pl' )->in( 't' );
+			@found;
 
 	push @files, 'test.pl' if -e 'test.pl';
 
@@ -366,6 +382,10 @@ sub _get_dist_modules
 
 	my $dirsep = "/";
 
+	my @found = ();
+	
+	find( sub { push @found, $File::Find::name if m/\.pm$/ }, $_[0] );
+		
 	my @files =
 		map {
 			my $x = $_;
@@ -374,22 +394,18 @@ sub _get_dist_modules
 			$x =~ s|$dirsep|::|g;
 			$x;
 			}
-			File::Find::Rule->file()->name( '*.pm' )->in( $_[0] );
-
-	#print STDERR "Found in blib @files\n";
+			@found;
 
 	return \@files;
 	}
 
 sub _get_from_file
 	{
-	my $class = shift;
+	my( $class, $file ) = @_;
 
-	my $file = shift;
+	my $module  = Module::Info->new_from_file( $file );
 
-	my $module = Module::Info->new_from_file( $file );
-
-	my @used = $module->modules_used;
+	my @used    = $module->modules_used;
 
 	my @modules =
 		sort

@@ -1,5 +1,6 @@
 # $Id$
 use strict;
+BEGIN{ $^W = 0; }
 
 use Test::More tests => 4;
 
@@ -7,14 +8,15 @@ use Cwd;
 use Test::Prereq;
 use Test::Prereq::Build;
 
+
 use lib qw(.);
 
 my $modules = Test::Prereq->_get_prereqs();
 print STDERR "Didn't find right modules!\nFound <@$modules>\n" unless
 ok( eq_array( $modules, 
 		[ 
-		qw( File::Find::Rule Module::Build Module::CoreList Module::Info 
-		Test::Builder Test::Builder::Tester Test::Manifest Test::More ) 
+		qw( Module::Build Module::CoreList Module::Info 
+		Test::Builder Test::Builder::Tester Test::More ) 
 		] ),
 	'Right modules for Makefile.PL'
 	);
