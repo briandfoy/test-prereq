@@ -288,6 +288,16 @@ and I don't think that's a good solution.
 * figure out which modules depend on others, and then apply that
 to what i see in the PREREQ_PM.
 
+=head1 SOURCE AVAILABILITY
+
+This source is part of a SourceForge project which always has the
+latest sources in CVS, as well as all of the previous releases.
+
+	https://sourceforge.net/projects/brian-d-foy/
+	
+If, for some reason, I disappear from the world, one of the other
+members of the project can shepherd this module appropriately.
+
 =head1 AUTHOR
 
 brian d foy, E<lt>bdfoy@cpan.orgE<gt>
