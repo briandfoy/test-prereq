@@ -16,14 +16,13 @@ Test::Prereq::ModuleBuild - test prerequisites in Module::Bulid scripts
 
 =cut
 
-$VERSION = '0.04';
+$VERSION = sprintf "%d.%03d", q$Revision$ =~ /(\d+)\.(\d+)/;
+
 @EXPORT = qw( prereq_ok );
 
 use Module::Build;
 
 =head1 METHODS
-
-THiS IS ALPHA SOFTWARE!
 
 If you have problems, send me your Build.PL.
 

@@ -28,8 +28,6 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 
 =head1 DESCRIPTION
 
-THIS IS ALPHA SOFTWARE.  IT HAS SOME PROBLEMS.
-
 The prereq_ok() function examines the modules it finds in blib/lib/,
 blib/script, and the test files it finds in t/ (and test.pl). It
 figures out which modules they use, skips the modules that are in the
@@ -88,7 +86,8 @@ use base qw(Exporter);
 use vars qw($VERSION $EXCLUDE_CPANPLUS @EXPORT @prereqs);
 
 
-$VERSION = '0.23';
+$VERSION = sprintf "%d.%03d", q$Revision$ =~ /(\d+)\.(\d+)/;
+
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);
