@@ -1,5 +1,8 @@
 # $Id$
 
+0.19 - Fri Dec 20 16:18:39 2002
+	* stripped bad whitespace from Pod, no code changes
+
 0.18 Mon Nov  4 19:25:56 CST 2002
 	- skip CPANPLUS modules by default.  still haven't
 	figured this out. 
