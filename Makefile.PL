@@ -31,3 +31,4 @@ WriteMakefile
 		clean  => { FILES => 'Test-Prereq-*' },
 		);
 
+1;

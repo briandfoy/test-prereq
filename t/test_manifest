@@ -3,5 +3,6 @@ pod.t
 import.t
 get_from_file.t
 get_prereqs.t
+get_from_prereqs.t
 get_loaded_modules.t
 prereq_ok.t

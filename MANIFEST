@@ -4,6 +4,7 @@ Makefile.PL
 lib/Build.pm
 lib/Prereq.pm
 t/get_from_file.t
+t/get_from_prereqs.t
 t/get_loaded_modules.t
 t/get_prereqs.t
 t/import.t

@@ -26,20 +26,29 @@ perl -MTest::More=tests,1 -MTest::Prereq -eprereq_ok
 
 THIS IS ALPHA SOFTWARE.  IT HAS SOME PROBLEMS.
 
-The prereq_ok() function examines the modules it finds in blib/lib/
-and the test files it finds in t/.  It figures out which modules
-they use, skips the modules that are in the Perl core, and compares
-the remaining list of modules to those in the PREREQ_PM section of
-Makefile.PL.  If you use Module::Build instead, see 
+The prereq_ok() function examines the modules it finds in
+blib/lib/ and the test files it finds in t/ (and test.pl). 
+It figures out which modules they use, skips the modules
+that are in the Perl core, and compares the remaining list
+of modules to those in the PREREQ_PM section of Makefile.PL.
+ If you use Module::Build instead, see
 L<Test::Prereq::Build> instead.
 
 =head2 Modules Test::Prereq can't find
 
-Module::Info only tells Test::Prereq which modules you used, not
-which distribution they came in.  This can be a problem for things
-in packages like libnet, libwww, Tk, and so on.  I do not have a
-good solution for this right now, but you can add those modules
-to the anonymous array which is the third parameter to prereq_ok.
+Module::Info only tells Test::Prereq which modules you used,
+not which distribution they came in.  This can be a problem
+for things in packages like libnet, libwww, Tk, and so on. 
+At the moment Test::Prereq asks CPAN.pm to expand anything
+in PREREQ_PM to see if one of the distributions you
+explicity list contains the module you actually used.  This
+might fail in some cases.  Please send me anything that does
+not do what you think it should.
+
+Test::Prereq only asks CPAN.pm for help if it needs it,
+since CPAN.pm can be slow if it has to fetch things from the
+network. Once it fetches the right things, it should be much
+faster.
 
 =head2 Problem with Module::Info
 
@@ -62,6 +71,7 @@ $VERSION = '0.12';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);
+use CPAN;
 use Exporter;
 use ExtUtils::MakeMaker;
 use File::Find::Rule;
@@ -147,7 +157,9 @@ sub _prereq_check
 			$class->_master_file . " did not return a true value.\n" );
 		return 0;
 		}
-	
+
+	my $dist_modules = $class->_get_from_prereqs( $prereqs );
+		
 	my $loaded = $class->_get_loaded_modules( 'blib/lib', 't' );
 	unless( $loaded )
 		{
@@ -158,7 +170,7 @@ sub _prereq_check
 		return 0;
 		}
 
-	# remove modules found in PREREQ_PM		
+	# remove modules found in PREREQ_PM
 	foreach my $module ( @$prereqs )
 		{
 		delete $loaded->{$module};
@@ -183,7 +195,20 @@ sub _prereq_check
 		{
 		delete $loaded->{$module};
 		}
-				
+
+	# if anything is left, look for modules in the distributions
+	# in PREREQ_PM.  this is slow, so we should only do it if
+	# we might need it.	
+	if( keys %$loaded )
+		{
+		my $modules = $class->_get_from_prereqs( $prereqs );
+		
+		foreach my $module ( @$skip )
+			{
+			delete $loaded->{$module};
+			}
+		}
+		
 	if( keys %$loaded ) # stuff left in %loaded, oops!
 		{
 		$Test->ok( 0, $name );
@@ -194,6 +219,8 @@ sub _prereq_check
 		{
 		$Test->ok( 1, $name );
 		}
+		
+	return 1;
 	}
 
 sub _master_file { 'Makefile.PL' }
@@ -204,17 +231,37 @@ sub _get_prereqs
 	my $file = $class->_master_file;
 	
 	delete $INC{$file};  # make sure we load it again
-	unless( do $file )
+	
+	unless( do "./$file" )
 		{
-		print STDERR $@;
+		print STDERR "_get_prereqs: Error loading $file: $!";
 		return;
 		}
-		
 	delete $INC{$file};  # pretend we were never here
-
+	
 	my @modules = sort @Test::Prereq::prereqs;
 	@Test::Prereq::prereqs = ();
 	return \@modules;
+	}
+	
+# expand prereqs and see what we get
+sub _get_from_prereqs
+	{
+	my $class   = shift;
+	my $modules = shift;
+		
+	my @dist_modules = ();
+	
+	foreach my $module ( @$modules )
+		{
+		my $mod      = CPAN::Shell->expand( "Module", $module );
+		my $distfile = $mod->cpan_file;
+		my $dist     = CPAN::Shell->expand( "Distribution", $distfile );
+		my @found    = $dist->containsmods;
+		push @dist_modules, @found;
+		}
+		
+	return \@dist_modules;
 	}
 	
 # get all the loaded modules.  we'll filter this later
@@ -305,12 +352,7 @@ sub _get_from_file
 
 =head1 TO DO
 
-* skip the modules included in the distribution.  at the moment
-I skip things that match the string in NAME in WriteMakefile 
-and I don't think that's a good solution.
-
-* figure out which modules depend on others, and then apply that
-to what i see in the PREREQ_PM.
+* set up a couple fake module distributions to test
 
 =head1 SOURCE AVAILABILITY
 
@@ -324,9 +366,9 @@ members of the project can shepherd this module appropriately.
 
 =head1 CONTRIBUTORS
 
-Thanks to:
+Many thanks to:
 
-Andy Lester, Slavin Rezic, Iain Truskett
+Andy Lester, Slavin Rezic, Randal Schwartz, Iain Truskett
 
 =head1 AUTHOR
 
