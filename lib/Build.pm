@@ -18,9 +18,10 @@ Test::Prereq::ModuleBuild - test prerequisites in Module::Bulid scripts
 
 $VERSION = sprintf "%d.%03d", q$Revision$ =~ /(\d+)\.(\d+)/;
 
-@EXPORT = qw( prereq_ok );
-
 use Module::Build;
+use Test::Builder;
+
+my $Test = Test::Builder->new;
 
 =head1 METHODS
 
@@ -37,13 +38,28 @@ brian d foy, C<< <bdfoy@cpan.org> >>
 
 =head1 COPYRIGHT
 
-Copyright 2002 brian d foy, All rights reserved
+Copyright 2002-2005 brian d foy, All rights reserved
 
 You can use this software under the same terms as Perl itself.
 
 =cut
 
-sub prereq_ok { __PACKAGE__->_prereq_check( @_ ) }
+sub import 
+	{
+    my $self   = shift;
+    my $caller = caller;
+    no strict 'refs';
+    *{$caller.'::prereq_ok'}       = \&prereq_ok;
+
+    $Test->exported_to($caller);
+    $Test->plan(@_);
+	}
+
+sub prereq_ok
+	{
+	$Test->plan( tests => 1 ) unless $Test->has_plan;
+	__PACKAGE__->_prereq_check( @_ );
+	}
 
 sub _master_file { 'Build.PL' }
 

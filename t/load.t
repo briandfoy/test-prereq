@@ -1,6 +1,6 @@
 # $Id$
 BEGIN {
-	@classes = qw(Test::Prereq);
+	@classes = qw(Test::Prereq Test::Prereq::Build);
 	}
 
 use Test::More tests => scalar @classes;

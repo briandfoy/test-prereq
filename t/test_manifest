@@ -2,5 +2,7 @@
 load.t
 pod.t
 pod_coverage.t
+pod_coverage.t
 import.t
+prior_plan.t
 get_from_file.t

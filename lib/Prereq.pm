@@ -9,7 +9,6 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 =head1 SYNOPSIS
 
 	# if you use Makefile.PL
-	use Test::More;
 	eval "use Test::Prereq";
 	plan skip_all => "Test::Prereq required to test dependencies" if $@;
 	prereq_ok();
@@ -18,13 +17,12 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 	prereq_ok( $version, $name, \@skip );
 
 	# if you use Module::Build
-	use Test::More;
 	eval "use Test::Prereq::Build";
 	plan skip_all => "Test::Prereq::Build required to test dependencies" if $@;
 	prereq_ok();
 
 	# or from the command line for a one-off check
-	perl -MTest::More -MTest::Prereq -eprereq_ok
+	perl -MTest::Prereq -eprereq_ok
 
 =head1 DESCRIPTION
 
@@ -92,12 +90,12 @@ $VERSION = sprintf "%d.%03d", q$Revision$ =~ /(\d+)\.(\d+)/;
 
 use Carp qw(carp);
 use CPAN;
-use Exporter;
 use ExtUtils::MakeMaker;
 use File::Find;
 use Module::CoreList;
 use Module::Info;
 use Test::Builder;
+use Test::More;
 
 my $Test = Test::Builder->new;
 
@@ -120,15 +118,21 @@ no warnings;
 	}
 }
 
+#unless( caller ) { prereq_ok() }
+
 =head1 FUNCTIONS
 
 =over 4
 
 =item prereq_ok( [ VERSION, [ NAME [, SKIP_ARRAY] ] ] )
 
+Tests Makefile.PL to ensure all non-core module dependencies
+are in PREREQ_PM. If you haven't set a testing plan already,
+prereq_ok() creates a plan of one test.
+
 If you don't specify a version, prereq_ok assumes you want
 to compare the list of prerequisite modules to version
-5.008001.
+5.008005.
 
 Valid versions come from Module::CoreList (which uses $[).
 
@@ -142,6 +146,7 @@ Valid versions come from Module::CoreList (which uses $[).
 	5.00405
 	5.005
 	5.00503
+	5.00504
 	5.006
 	5.006001
 	5.006002
@@ -149,7 +154,11 @@ Valid versions come from Module::CoreList (which uses $[).
 	5.008
 	5.008001
 	5.008002
+	5.008003
+	5.008004
+	5.008005
 	5.009
+	5.009001
 
 prereq_ok attempts to remove modules found in blib and
 libraries found in t from the reported prerequisites.
@@ -160,13 +169,24 @@ this if your tests do funny things with require.
 
 =cut
 
-my $default_version = '5.008001';
-my $version         = '5.008001';
+my $default_version = '5.008005';
+my $version         = '5.008005';
 
 sub prereq_ok
 	{
-	$Test->plan( tests => 1 );
+	$Test->plan( tests => 1 ) unless $Test->has_plan;
 	__PACKAGE__->_prereq_check( @_ );
+	}
+
+sub import 
+	{
+    my $self   = shift;
+    my $caller = caller;
+    no strict 'refs';
+    *{$caller.'::prereq_ok'}       = \&prereq_ok;
+
+    $Test->exported_to($caller);
+    $Test->plan(@_);
 	}
 
 sub _prereq_check
@@ -424,8 +444,6 @@ sub _get_from_file
 
 * warn about things that show up in PREREQ_PM unnecessarily
 
-* get rid of File::Finder::Rule
-
 =head1 SOURCE AVAILABILITY
 
 This source is part of a SourceForge project which always has the
@@ -448,7 +466,7 @@ brian d foy, C<< <bdfoy@cpan.org> >>
 
 =head1 COPYRIGHT
 
-Copyright 2002, brian d foy, All Rights Reserved.
+Copyright 2002-2005, brian d foy, All Rights Reserved.
 
 You may use, modify, and distribute this package under the
 same terms as Perl itself.
