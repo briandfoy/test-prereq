@@ -8,7 +8,7 @@ use Test::Prereq;
 my $modules = Test::Prereq->_get_loaded_modules( 'blib/lib', 't' );
 my $keys = [ sort keys %$modules ];
 
-print "Didn't find right modules! Found < @$keys >\n" unless
+print STDERR "Didn't find right modules! Found < @$keys >\n" unless
 ok(
   eq_array( $keys, 
 		[ 

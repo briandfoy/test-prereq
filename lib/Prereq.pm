@@ -62,12 +62,21 @@ Also, if a file cannot compile, Module::Info dumps a lot of text
 to the terminal.  You probably want to bail out of testing if the
 files do not compile anyway. 
 
+=head2 Problem with CPANPLUS
+
+CPANPLUS apparently does some wierd things, and since it is still
+young and not part of the Standard Library, Test::Prereq's tests
+do not do the right thing under it (for some reason).
+
+You should be able to do a 'make test' manually to make everything
+work, though.
+
 =cut
 
 use base qw(Exporter);
 use vars qw($VERSION @EXPORT @prereqs);
 
-$VERSION = '0.13';
+$VERSION = '0.14';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);

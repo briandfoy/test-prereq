@@ -1,10 +1,14 @@
 # $Id$
 use ExtUtils::MakeMaker;
 
-my $tests = do {
-	local @ARGV = qw(t/test_manifest);
-	my $data = join " ", map {chomp; "t/$_" } <>;
-	};
+sub ExtUtils::MM_Any::test_via_harness
+	   {
+	   my($self, $perl, $tests) = @_;
+
+	   return qq|\t$perl "-MTest::Manifest" | .
+				  qq|"-e" "run_t_manifest(\$(TEST_VERBOSE), '\$(INST_LIB)', | .
+				  qq|'\$(INST_ARCHLIB)')"\n|;
+	   }
 
 WriteMakefile
 		(
@@ -17,6 +21,7 @@ WriteMakefile
 			'Module::Info'          => '0',
 			'Test::Builder'         => '0',
 			'Test::Builder::Tester' => '0',
+			'Test::Manifest'        => '0.9',
 			'Test::More'            => '0',
 			'Test::Pod'             => '0',
 			},
@@ -27,7 +32,6 @@ WriteMakefile
 			},
 
 		depend => { Makefile => 't/test_manifest' },
-		test   => { TESTS => $tests },
 		clean  => { FILES => 'Test-Prereq-*' },
 		);
 
