@@ -8,6 +8,7 @@ t/get_loaded_modules.t
 t/get_prereqs.t
 t/load.t
 t/pod.t
+t/import.t
 t/prereq_ok.t
 t/test_manifest
 testdir/Build.PL
