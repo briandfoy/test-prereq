@@ -36,7 +36,6 @@ WriteMakefile
         	'lib/Build.pm' => '$(INST_MAN3DIR)/Test::Prereq::Build.3',
         	},
 
-		depend => { Makefile => 't/test_manifest' },
 		clean  => { FILES => 'Test-Prereq-*' },
 		);
 
