@@ -8,19 +8,19 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 
 =head1 SYNOPSIS
 
-# if you use Makefile.PL
-use Test::Prereq;
-prereq_ok();
-
-# specify a perl version, test name, or module names to skip
-prereq_ok( $version, $name, \@skip );
-
-# if you use Module::Build
-use Test::Prereq::Build;
-prereq_ok();
-
-# or from the command line for a one-off check
-perl -MTest::More=tests,1 -MTest::Prereq -eprereq_ok
+	# if you use Makefile.PL
+	use Test::Prereq;
+	prereq_ok();
+	
+	# specify a perl version, test name, or module names to skip
+	prereq_ok( $version, $name, \@skip );
+	
+	# if you use Module::Build
+	use Test::Prereq::Build;
+	prereq_ok();
+	
+	# or from the command line for a one-off check
+	perl -MTest::More=tests,1 -MTest::Prereq -eprereq_ok
 
 =head1 DESCRIPTION
 
@@ -79,7 +79,7 @@ work, though.
 use base qw(Exporter);
 use vars qw($VERSION @EXPORT @prereqs);
 
-$VERSION = '0.16';
+$VERSION = '0.17';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);
@@ -112,8 +112,9 @@ sub ExtUtils::MakeMaker::WriteMakefile
 
 =item prereq_ok( [ VERSION, [ NAME [, SKIP_ARRAY] ] ] )
 
-If you don't specify a version, prereq_ok assumes you want to compare
-the list of prerequisite modules to version 5.6.1.
+If you don't specify a version, prereq_ok assumes you want
+to compare the list of prerequisite modules to version
+5.6.1.
 
 Valid version come from Module::CoreList (which uses $[):
 
@@ -127,12 +128,12 @@ Valid version come from Module::CoreList (which uses $[):
         5.006
         5.006001
 
-prereq_ok attempts to remove modules found in blib and 
+prereq_ok attempts to remove modules found in blib and
 libraries found in t from the reported prerequisites.
 
-The optional third argument is an array reference to a list of
-names that prereq_ok should ignore. You might want to use this
-if your tests do funny things with require.
+The optional third argument is an array reference to a list
+of names that prereq_ok should ignore. You might want to use
+this if your tests do funny things with require.
 
 =cut
 
@@ -169,8 +170,6 @@ sub _prereq_check
 			$class->_master_file . " did not return a true value.\n" );
 		return 0;
 		}
-
-	my $dist_modules = $class->_get_from_prereqs( $prereqs );
 		
 	my $loaded = $class->_get_loaded_modules( 'blib/lib', 't' );
 	unless( $loaded )
@@ -261,7 +260,7 @@ sub _get_from_prereqs
 	{
 	my $class   = shift;
 	my $modules = shift;
-		
+	
 	my @dist_modules = ();
 	
 	foreach my $module ( @$modules )
@@ -365,6 +364,8 @@ sub _get_from_file
 =head1 TO DO
 
 * set up a couple fake module distributions to test
+
+* scan script directory too?
 
 =head1 SOURCE AVAILABILITY
 
