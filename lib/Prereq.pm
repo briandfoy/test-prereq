@@ -11,14 +11,14 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 	# if you use Makefile.PL
 	use Test::Prereq;
 	prereq_ok();
-	
+
 	# specify a perl version, test name, or module names to skip
 	prereq_ok( $version, $name, \@skip );
-	
+
 	# if you use Module::Build
 	use Test::Prereq::Build;
 	prereq_ok();
-	
+
 	# or from the command line for a one-off check
 	perl -MTest::More=tests,1 -MTest::Prereq -eprereq_ok
 
@@ -27,7 +27,7 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 THIS IS ALPHA SOFTWARE.  IT HAS SOME PROBLEMS.
 
 The prereq_ok() function examines the modules it finds in
-blib/lib/ and the test files it finds in t/ (and test.pl). 
+blib/lib/ and the test files it finds in t/ (and test.pl).
 It figures out which modules they use, skips the modules
 that are in the Perl core, and compares the remaining list
 of modules to those in the PREREQ_PM section of Makefile.PL.
@@ -38,7 +38,7 @@ L<Test::Prereq::Build> instead.
 
 Module::Info only tells Test::Prereq which modules you used,
 not which distribution they came in.  This can be a problem
-for things in packages like libnet, libwww, Tk, and so on. 
+for things in packages like libnet, libwww, Tk, and so on.
 At the moment Test::Prereq asks CPAN.pm to expand anything
 in PREREQ_PM to see if one of the distributions you
 explicity list contains the module you actually used.  This
@@ -60,7 +60,7 @@ does not use (or require) any modules.  You may get a message like
 
 Also, if a file cannot compile, Module::Info dumps a lot of text
 to the terminal.  You probably want to bail out of testing if the
-files do not compile, though. 
+files do not compile, though.
 
 =head2 Problem with CPANPLUS
 
@@ -94,7 +94,7 @@ use Module::Info;
 use Test::Builder;
 
 my $Test = Test::Builder->new;
-	
+
 my $Namespace = '';
 
 $EXCLUDE_CPANPLUS = 1;
@@ -102,14 +102,14 @@ $EXCLUDE_CPANPLUS = 1;
 sub ExtUtils::MakeMaker::WriteMakefile
 	{
 	my %hash = @_;
-	
+
 	my $name = $hash{NAME};
 	my $hash = $hash{PREREQ_PM};
-	
+
 	$Namespace = $name;
 	@Test::Prereq::prereqs   = sort keys %$hash;
 	}
-	
+
 =head1 FUNCTIONS
 
 =over 4
@@ -148,33 +148,33 @@ sub prereq_ok
 	{
 	__PACKAGE__->_prereq_check( @_ );
 	}
-	
+
 sub _prereq_check
 	{
 	my $class   = shift;
-	
+
 	   $version  = shift || $default_version;
 	my $name     = shift || 'Prereq test';
 	my $skip     = shift || [];
-	
-	$version = $default_version unless 
+
+	$version = $default_version unless
 		exists $Module::CoreList::version{$version};
-	
+
 	unless( UNIVERSAL::isa( $skip, 'ARRAY' ) )
 		{
 		carp( 'Third parameter to prereq_ok must be an array reference!' );
 		return;
 		}
-		
+
 	my $prereqs = $class->_get_prereqs();
 	unless( $prereqs )
 		{
 		$Test->ok( 0, $name );
-		$Test->diag( "\t" . 
+		$Test->diag( "\t" .
 			$class->_master_file . " did not return a true value.\n" );
 		return 0;
 		}
-		
+
 	my $loaded = $class->_get_loaded_modules( 'blib/lib', 't' );
 	unless( $loaded )
 		{
@@ -191,21 +191,21 @@ sub _prereq_check
 		delete $loaded->{$module};
 		}
 
-	# remove modules found in distribution	
+	# remove modules found in distribution
 	my $distro = $class->_get_dist_modules( 'blib/lib' );
 	foreach my $module ( @$distro )
 		{
 		delete $loaded->{$module};
 		}
 
-	# remove modules found in test directory	
+	# remove modules found in test directory
 	$distro = $class->_get_test_libraries();
 	foreach my $module ( @$distro )
 		{
 		delete $loaded->{$module};
 		}
 
-	# remove modules in the skip array	
+	# remove modules in the skip array
 	foreach my $module ( @$skip )
 		{
 		delete $loaded->{$module};
@@ -213,17 +213,17 @@ sub _prereq_check
 
 	# if anything is left, look for modules in the distributions
 	# in PREREQ_PM.  this is slow, so we should only do it if
-	# we might need it.	
+	# we might need it.
 	if( keys %$loaded )
 		{
 		my $modules = $class->_get_from_prereqs( $prereqs );
-		
+
 		foreach my $module ( @$skip )
 			{
 			delete $loaded->{$module};
 			}
 		}
-	
+
 	if( $EXCLUDE_CPANPLUS )
 		{
 		foreach my $module ( keys %$loaded )
@@ -232,7 +232,7 @@ sub _prereq_check
 			delete $loaded->{$module};
 			}
 		}
-		
+
 	if( keys %$loaded ) # stuff left in %loaded, oops!
 		{
 		$Test->ok( 0, $name );
@@ -243,7 +243,7 @@ sub _prereq_check
 		{
 		$Test->ok( 1, $name );
 		}
-		
+
 	return 1;
 	}
 
@@ -253,29 +253,29 @@ sub _get_prereqs
 	{
 	my $class = shift;
 	my $file = $class->_master_file;
-	
+
 	delete $INC{$file};  # make sure we load it again
-	
+
 	unless( do "./$file" )
 		{
 		print STDERR "_get_prereqs: Error loading $file: $!";
 		return;
 		}
 	delete $INC{$file};  # pretend we were never here
-	
+
 	my @modules = sort @Test::Prereq::prereqs;
 	@Test::Prereq::prereqs = ();
 	return \@modules;
 	}
-	
+
 # expand prereqs and see what we get
 sub _get_from_prereqs
 	{
 	my $class   = shift;
 	my $modules = shift;
-	
+
 	my @dist_modules = ();
-	
+
 	foreach my $module ( @$modules )
 		{
 		my $mod      = CPAN::Shell->expand( "Module", $module );
@@ -284,10 +284,10 @@ sub _get_from_prereqs
 		my @found    = $dist->containsmods;
 		push @dist_modules, @found;
 		}
-		
+
 	return \@dist_modules;
 	}
-	
+
 # get all the loaded modules.  we'll filter this later
 sub _get_loaded_modules
 	{
@@ -299,13 +299,13 @@ sub _get_loaded_modules
 	my @files = File::Find::Rule->file()->name( '*.pm' )->in( $_[0] );
 
 	push @files, File::Find::Rule->file()->name( '*.t' )->in( $_[1] );
-	
+
 	my @found = ();
 	foreach my $file ( @files )
 		{
 		push @found, @{ $class->_get_from_file( $file ) };
 		}
-		
+
 	return { map { $_, 1 } @found };
 	}
 
@@ -315,7 +315,7 @@ sub _get_test_libraries
 
 	my $dirsep = "/";
 
-	my @files = 
+	my @files =
 		map {
 			my $x = $_;
 			$x =~ s/^.*$dirsep//;
@@ -325,20 +325,20 @@ sub _get_test_libraries
 			File::Find::Rule->file()->name( '*.pl' )->in( 't' );
 
 	push @files, 'test.pl' if -e 'test.pl';
-	
+
 	return \@files;
 	}
-		
+
 sub _get_dist_modules
 	{
 	my $class = shift;
 
 	return unless( defined $_[0] and -d $_[0] );
-	
+
 	my $dirsep = "/";
-	
-	my @files = 
-		map { 
+
+	my @files =
+		map {
 			my $x = $_;
 			$x =~ s/^$_[0]($dirsep)?//;
 			$x =~ s/\.pm$//;
@@ -346,29 +346,29 @@ sub _get_dist_modules
 			$x;
 			}
 			File::Find::Rule->file()->name( '*.pm' )->in( $_[0] );
-			
+
 	#print STDERR "Found in blib @files\n";
-	
+
 	return \@files;
 	}
-	
+
 sub _get_from_file
 	{
 	my $class = shift;
 
 	my $file = shift;
-	
+
 	my $module = Module::Info->new_from_file( $file );
-	
+
 	my @used = $module->modules_used;
-	
-	my @modules = 
-		sort 
+
+	my @modules =
+		sort
 		grep { not exists $Module::CoreList::version{$version}{$_} }
 		@used;
-	
+
 	@modules = grep { not /$Namespace/ } @modules if $Namespace;
-	
+
 	return \@modules;
 	}
 
@@ -386,7 +386,7 @@ This source is part of a SourceForge project which always has the
 latest sources in CVS, as well as all of the previous releases.
 
 	https://sourceforge.net/projects/brian-d-foy/
-	
+
 If, for some reason, I disappear from the world, one of the other
 members of the project can shepherd this module appropriately.
 

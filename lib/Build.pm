@@ -23,7 +23,7 @@ use Module::Build;
 
 =head1 METHODS
 
-THiS IS ALPHA SOFTWARE! 
+THiS IS ALPHA SOFTWARE!
 
 If you have problems, send me your Build.PL.
 
@@ -52,16 +52,16 @@ sub _master_file { 'Build.PL' }
 sub Module::Build::new
 	{
 	my $class = shift;
-	
+
 	my %hash = @_;
-	
+
 	my @requires = sort grep $_ ne 'perl', (
-		keys %{ $hash{requires} }, 
+		keys %{ $hash{requires} },
 		keys %{ $hash{build_requires} },
 		);
 
 	@Test::Prereq::prereqs = @requires;
-	
+
 	# intercept further calls to this object
 	return bless {}, __PACKAGE__;
 	}
