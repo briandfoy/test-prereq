@@ -1,5 +1,12 @@
 # $Id$
 
+1.027 - Tue Mar  8 00:18:28 2005
+	* fixed up the bits that deal with the plan, to make things
+	consistent. prereq_ok will create the plan if it doesn't
+	exist, or leave it alone if it does.
+	* You don't need to use Test::More (and you didn't need
+	to previously, despite the docs)
+
 1.026 - Fri Mar  4 08:09:41 2005
 * Documentation fix for command line invocation: Test::Prereq
 calls plan() for you, so you don't have to.
