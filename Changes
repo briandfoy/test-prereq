@@ -1,0 +1,2 @@
+0.07 Mon Sep 30 00:53:19 PDT 2002
+	- cleaned up Makefile.PL for perl5.8.0 weirdness
