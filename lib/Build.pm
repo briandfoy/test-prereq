@@ -22,6 +22,10 @@ use Module::Build;
 
 =head1 METHODS
 
+THiS IS ALPHA SOFTWARE! 
+
+If you have problems, send me your Build.PL.
+
 This module overrides methods in Test::Prereq to make it work with
 Module::Build.
 
