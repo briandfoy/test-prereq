@@ -1,5 +1,8 @@
 # $Id$
 
+0.23 - Fri Feb 20 05:42:18 2004
+	* got rid of the File::Find::Rule dependency
+
 0.19 - Fri Dec 20 16:18:39 2002
 	* stripped bad whitespace from Pod, no code changes
 
