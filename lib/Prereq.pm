@@ -12,9 +12,15 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 use Test::Prereq;
 prereq_ok();
 
+# specify a perl version, test name, or module names to skip
+prereq_ok( $version, $name, \@skip );
+
 # if you use Module::Build
 use Test::Prereq::Build;
 prereq_ok();
+
+# or from the command line for a one-off check
+perl -MTest::More=tests,1 -MTest::Prereq -eprereq_ok
 
 =head1 DESCRIPTION
 
@@ -27,16 +33,32 @@ the remaining list of modules to those in the PREREQ_PM section of
 Makefile.PL.  If you use Module::Build instead, see 
 L<Test::Prereq::Build> instead.
 
-Your Makefile.PL must end in a true value since prereq_ok() has to 
-require() it to perform a bit of magic.  Not to worry---it will tell
-you when you don't.
+=head2 Modules Test::Prereq can't find
+
+Module::Info only tells Test::Prereq which modules you used, not
+which distribution they came in.  This can be a problem for things
+in packages like libnet, libwww, Tk, and so on.  I do not have a
+good solution for this right now, but you can add those modules
+to the anonymous array which is the third parameter to prereq_ok.
+
+=head2 Problem with Module::Info
+
+Module::Info appears to do something wierd if a file it analyzes
+does not use (or require) any modules.  You may get a message like
+
+  Can't locate object method "name" via package "B::NULL" at
+  /usr/perl5.8.0/lib/site_perl/5.8.0/B/Module/Info.pm line 176.
+
+Also, if a file cannot compile, Module::Info dumps a lot of text
+to the terminal.  You probably want to bail out of testing if the
+files do not compile anyway. 
 
 =cut
 
 use base qw(Exporter);
 use vars qw($VERSION @EXPORT @prereqs);
 
-$VERSION = '0.11';
+$VERSION = '0.12';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);
@@ -182,7 +204,7 @@ sub _get_prereqs
 	my $file = $class->_master_file;
 	
 	delete $INC{$file};  # make sure we load it again
-	unless( eval { eval "require '$file'" } )
+	unless( do $file )
 		{
 		print STDERR $@;
 		return;
@@ -231,6 +253,8 @@ sub _get_test_libraries
 			}
 			File::Find::Rule->file()->name( '*.pl' )->in( 't' );
 
+	push @file, 'test.pl' if -e 'test.pl';
+	
 	return \@files;
 	}
 		
@@ -297,6 +321,12 @@ latest sources in CVS, as well as all of the previous releases.
 	
 If, for some reason, I disappear from the world, one of the other
 members of the project can shepherd this module appropriately.
+
+=head1 CONTRIBUTORS
+
+Thanks to:
+
+Andy Lester, Slavin Rezic, Iain Truskett
 
 =head1 AUTHOR
 
