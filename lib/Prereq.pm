@@ -284,7 +284,7 @@ sub _get_prereqs
 	delete $INC{$file};  # make sure we load it again
 
 	{
-	no warnings;
+	local $^W = 0;
 	
 	unless( do "./$file" )
 		{
