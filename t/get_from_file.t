@@ -11,7 +11,7 @@ print STDERR "Did not find right modules from t/pod.t!\n" .
 	"Found <@modules>\n" unless
 	ok(
 		eq_array( \@modules, 
-			[ qw( File::Find::Rule Test::More Test::Pod ) ] ),
+			[ qw(Test::More) ] ),
 			'Right modules for t/pod.t'
 			);
 

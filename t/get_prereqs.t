@@ -14,7 +14,7 @@ print STDERR "Didn't find right modules!\nFound <@$modules>\n" unless
 ok( eq_array( $modules, 
 		[ 
 		qw( File::Find::Rule Module::Build Module::CoreList Module::Info 
-		Test::Builder Test::Builder::Tester Test::Manifest Test::More Test::Pod ) 
+		Test::Builder Test::Builder::Tester Test::Manifest Test::More ) 
 		] ),
 	'Right modules for Makefile.PL'
 	);
