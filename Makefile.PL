@@ -23,7 +23,6 @@ WriteMakefile
 			'Test::Builder::Tester' => '0',
 			'Test::Manifest'        => '0.91',
 			'Test::More'            => '0',
-			'Test::Pod'             => '0.90',
 			},
         'PM'        => 
 			{
