@@ -21,7 +21,7 @@ $modules = Test::Prereq->_get_from_file( 'lib/Prereq.pm' );
 print STDERR "Did not find right modules for lib/Prereq.pm!\n" .
 	 "Found <@modules>\n" unless
 		ok(
-			eq_array( $modules, [ 
+			eq_array( \@modules, [ 
 			qw( File::Find::Rule Module::CoreList 
 				Module::Info Test::Builder ) ] ),
 			'Right modules for t/Prereq.pm'

@@ -79,7 +79,7 @@ work, though.
 use base qw(Exporter);
 use vars qw($VERSION @EXPORT @prereqs);
 
-$VERSION = '0.15';
+$VERSION = '0.16';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);

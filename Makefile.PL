@@ -30,6 +30,11 @@ WriteMakefile
 			'lib/Prereq.pm'  => '$(INST_LIBDIR)/Prereq.pm',
 			'lib/Build.pm'   => '$(INST_LIBDIR)/Prereq/Build.pm',
 			},
+        'MAN3PODS' =>
+        	{
+        	'lib/Prereq.pm' => '$(INST_MAN3DIR)/Test::Prereq.3',
+        	'lib/Build.pm' => '$(INST_MAN3DIR)/Test::Prereq::Build.3',
+        	},
 
 		depend => { Makefile => 't/test_manifest' },
 		clean  => { FILES => 'Test-Prereq-*' },
