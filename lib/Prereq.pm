@@ -64,9 +64,12 @@ files do not compile anyway.
 
 =head2 Problem with CPANPLUS
 
-CPANPLUS apparently does some wierd things, and since it is still
-young and not part of the Standard Library, Test::Prereq's tests
-do not do the right thing under it (for some reason).
+CPANPLUS apparently does some wierd things, and since it is
+still young and not part of the Standard Library,
+Test::Prereq's tests do not do the right thing under it (for
+some reason).  Test::Prereq cheats by ignoring CPANPLUS
+completely in the tests---at least until someone has a
+better solution.
 
 You should be able to do a 'make test' manually to make everything
 work, though.
@@ -76,7 +79,7 @@ work, though.
 use base qw(Exporter);
 use vars qw($VERSION @EXPORT @prereqs);
 
-$VERSION = '0.14';
+$VERSION = '0.15';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);

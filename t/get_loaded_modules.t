@@ -6,7 +6,8 @@ use Test::Prereq;
 
 {
 my $modules = Test::Prereq->_get_loaded_modules( 'blib/lib', 't' );
-my $keys = [ sort keys %$modules ];
+
+my $keys = [ grep ! /^CPANPLUS/, sort keys %$modules ];
 
 print STDERR "Didn't find right modules! Found < @$keys >\n" unless
 ok(
