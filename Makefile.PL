@@ -9,7 +9,7 @@ my $tests = do {
 WriteMakefile
 		(
 		'NAME'      => 'Test::Prereq',
-		'VERSION'   => '0.10',
+		'VERSION'   => '0.11',
 		'PREREQ_PM' => {
 			'File::Find::Rule'      => '0',
 			'Module::Build'         => '0',
