@@ -1,0 +1,15 @@
+.releaserc
+.cvsignore
+.lwpcookies
+.DS_Store
+Test-Prereq-*
+blib/
+hacks/
+CVS
+Makefile.old
+MANIFEST.SKIP
+MANIFEST.bak
+pm_to_blib
+Makefile$
+~$
+.rej$
