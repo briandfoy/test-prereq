@@ -1,5 +1,8 @@
 # $Id$
 
+0.23 - Tue Aug 24 19:58:53 2004
+* Changed a few things for demo talk
+
 0.23 - Fri Feb 20 05:42:18 2004
 	* got rid of the File::Find::Rule dependency
 
