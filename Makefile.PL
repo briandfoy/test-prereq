@@ -9,9 +9,10 @@ my $tests = do {
 WriteMakefile
 		(
 		'NAME'      => 'Test::Prereq',
-		'VERSION'   => '0.07',
+		'VERSION'   => '0.10',
 		'PREREQ_PM' => {
 			'File::Find::Rule'      => '0',
+			'Module::Build'         => '0',
 			'Module::Info'          => '0',
 			'Module::CoreList'      => '0',
 			'Test::More'            => '0',
@@ -21,7 +22,8 @@ WriteMakefile
 			},
         'PM'        => 
 			{
-			'lib/Prereq.pm' => '$(INST_LIBDIR)/Prereq.pm',
+			'lib/Prereq.pm'  => '$(INST_LIBDIR)/Prereq.pm',
+			'lib/Build.pm'   => '$(INST_LIBDIR)/Prereq/Build.pm',
 			},
 
 		depend => { Makefile => 't/test_manifest' },

@@ -6,11 +6,11 @@ use Test::Prereq;
 
 use lib qw(.);
 
-my $modules = Test::Prereq::_get_prereqs();
+my $modules = Test::Prereq->_get_prereqs();
 ok(
   eq_array( $modules, 
 		[ 
-		qw( File::Find::Rule Module::CoreList Module::Info 
+		qw( File::Find::Rule Module::Build Module::CoreList Module::Info 
 		Test::Builder Test::Builder::Tester Test::More Test::Pod) 
 		] ),
 	'Right modules for Makefile.PL'
@@ -20,7 +20,7 @@ ok(
 use Cwd;
 my $cwd = cwd;
 chdir "testdir/bad_makefile" or warn "Could not change directory! $!";
-my $modules = Test::Prereq::_get_prereqs();
+my $modules = Test::Prereq->_get_prereqs();
 
 my $okay = defined $modules ? 0 : 1;
 

@@ -8,8 +8,12 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 
 =head1 SYNOPSIS
 
+# if you use Makefile.PL
 use Test::Prereq;
+prereq_ok();
 
+# if you use Module::Build
+use Test::Prereq::Build;
 prereq_ok();
 
 =head1 DESCRIPTION
@@ -20,7 +24,8 @@ The prereq_ok() function examines the modules it finds in blib/lib/
 and the test files it finds in t/.  It figures out which modules
 they use, skips the modules that are in the Perl core, and compares
 the remaining list of modules to those in the PREREQ_PM section of
-Makefile.PL.
+Makefile.PL.  If you use Module::Build instead, see 
+L<Test::Prereq::Build> instead.
 
 Your Makefile.PL must end in a true value since prereq_ok() has to 
 require() it to perform a bit of magic.  Not to worry---it will tell
@@ -28,11 +33,14 @@ you when you don't.
 
 =cut
 
-use vars qw($VERSION @EXPORT);
-$VERSION = '0.05';
+use base qw(Exporter);
+use vars qw($VERSION @EXPORT @prereqs);
+
+$VERSION = '0.10';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);
+use Exporter;
 use ExtUtils::MakeMaker;
 use File::Find::Rule;
 use Module::CoreList;
@@ -41,18 +49,6 @@ use Test::Builder;
 
 my $Test = Test::Builder->new;
 	
-sub import 
-	{
-    my $self = shift;
-    my $caller = caller;
-    no strict 'refs';
-    *{$caller.'::prereq_ok'}    = \&prereq_ok;
-
-    $Test->exported_to($caller);
-    $Test->plan(@_);
-	}
-
-my @prereqs   = ();
 my $Namespace = '';
 
 sub ExtUtils::MakeMaker::WriteMakefile
@@ -63,7 +59,7 @@ sub ExtUtils::MakeMaker::WriteMakefile
 	my $hash = $hash{PREREQ_PM};
 	
 	$Namespace = $name;
-	@prereqs   = sort keys %$hash;
+	@Test::Prereq::prereqs   = sort keys %$hash;
 	}
 	
 =head1 FUNCTIONS
@@ -101,6 +97,9 @@ my $version         = '5.006001';
 
 sub prereq_ok
 	{
+	my $object   = {};
+	bless $object, __PACKAGE__;
+	
 	   $version  = shift || '5.006001';
 	my $name     = shift || 'Prereq test';
 	my $skip     = shift || [];
@@ -114,7 +113,7 @@ sub prereq_ok
 		return;
 		}
 		
-	my $prereqs = _get_prereqs();
+	my $prereqs = $object->_get_prereqs();
 	unless( $prereqs )
 		{
 		$Test->ok( 0, $name );
@@ -125,7 +124,7 @@ sub prereq_ok
 		return 0;
 		}
 	
-	my $loaded = _get_loaded_modules( 'blib/lib', 't' );
+	my $loaded = $object->_get_loaded_modules( 'blib/lib', 't' );
 	unless( $loaded )
 		{
 		$Test->ok( 0, $name );
@@ -142,14 +141,14 @@ sub prereq_ok
 		}
 
 	# remove modules found in distribution	
-	my $distro = _get_dist_modules( 'blib/lib' );
+	my $distro = $object->_get_dist_modules( 'blib/lib' );
 	foreach my $module ( @$distro )
 		{
 		delete $loaded->{$module};
 		}
 
 	# remove modules found in test directory	
-	$distro = _get_test_libraries();
+	$distro = $object->_get_test_libraries();
 	foreach my $module ( @$distro )
 		{
 		delete $loaded->{$module};
@@ -173,19 +172,26 @@ sub prereq_ok
 		}
 	}
 
+sub _master_file { 'Makefile.PL' }
+
 sub _get_prereqs
 	{
-	delete $INC{'Makefile.PL'};  # make sure we load it again
-	return unless eval { require 'Makefile.PL' };
-	delete $INC{'Makefile.PL'};  # pretend we were never here
+	my $self = shift;
+	my $file = $self->_master_file;
+	
+	delete $INC{$file};  # make sure we load it again
+	return unless eval { eval "require '$file'" };
+	delete $INC{$file};  # pretend we were never here
 
-	my @modules = sort @prereqs;
-	@prereqs = ();
+	my @modules = sort @Test::Prereq::prereqs;
+	@Test::Prereq::prereqs = ();
 	return \@modules;
 	}
 	
 sub _get_loaded_modules
 	{
+	my $self = shift;
+
 	return unless( defined $_[0] and defined $_[1] );
 	return unless( -d $_[0] and -d $_[1] );
 
@@ -196,7 +202,7 @@ sub _get_loaded_modules
 	my @found = ();
 	foreach my $file ( @files )
 		{
-		push @found, @{ _get_from_file( $file ) };
+		push @found, @{ $self->_get_from_file( $file ) };
 		}
 		
 	return { map { $_, 1 } @found };
@@ -204,6 +210,8 @@ sub _get_loaded_modules
 
 sub _get_test_libraries
 	{
+	my $self = shift;
+
 	my $dirsep = "/";
 
 	my @files = 
@@ -220,6 +228,8 @@ sub _get_test_libraries
 		
 sub _get_dist_modules
 	{
+	my $self = shift;
+
 	return unless( defined $_[0] and -d $_[0] );
 	
 	my $dirsep = "/";
@@ -241,6 +251,8 @@ sub _get_dist_modules
 	
 sub _get_from_file
 	{
+	my $self = shift;
+
 	my $file = shift;
 	
 	my $module = Module::Info->new_from_file( $file );
