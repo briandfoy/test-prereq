@@ -253,7 +253,7 @@ sub _get_test_libraries
 			}
 			File::Find::Rule->file()->name( '*.pl' )->in( 't' );
 
-	push @file, 'test.pl' if -e 'test.pl';
+	push @files, 'test.pl' if -e 'test.pl';
 	
 	return \@files;
 	}
