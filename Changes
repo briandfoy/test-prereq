@@ -1,5 +1,9 @@
 # $Id$
 
+0.17 Wed Oct 23 11:55:28 CDT 2002
+	- removed extra call to CPAN.pm.  this should make 
+	things run faster.
+	
 0.16 Fri Oct 11 03:46:12 CDT 2002
 	- add MAN3PODS to WriteMakefile to make man
 	pages show up in the right place
