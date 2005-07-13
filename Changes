@@ -1,5 +1,8 @@
 # $Id$
 
+1.028 - Wed Jul 13 17:31:13 2005
+	* Simple doc fixes. No need to upgrade.
+
 1.027 - Tue Mar  8 00:18:28 2005
 	* fixed up the bits that deal with the plan, to make things
 	consistent. prereq_ok will create the plan if it doesn't
