@@ -7,7 +7,7 @@ use vars qw($VERSION @EXPORT);
 
 =head1 NAME
 
-Test::Prereq::ModuleBuild - test prerequisites in Module::Bulid scripts
+Test::Prereq::Build - test prerequisites in Module::Build scripts
 
 =head1 SYNOPSIS
 

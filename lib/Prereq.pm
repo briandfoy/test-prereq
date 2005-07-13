@@ -9,6 +9,7 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 =head1 SYNOPSIS
 
 	# if you use Makefile.PL
+	use Test::More;
 	eval "use Test::Prereq";
 	plan skip_all => "Test::Prereq required to test dependencies" if $@;
 	prereq_ok();
@@ -17,6 +18,7 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 	prereq_ok( $version, $name, \@skip );
 
 	# if you use Module::Build
+	use Test::More;
 	eval "use Test::Prereq::Build";
 	plan skip_all => "Test::Prereq::Build required to test dependencies" if $@;
 	prereq_ok();
