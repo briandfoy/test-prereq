@@ -2,6 +2,7 @@
 use strict;
 
 use Test::Prereq;
+use Test::More tests => 1;
 
 use lib qw(.);
 

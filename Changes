@@ -11,20 +11,20 @@
 	to previously, despite the docs)
 
 1.026 - Fri Mar  4 08:09:41 2005
-* Documentation fix for command line invocation: Test::Prereq
-calls plan() for you, so you don't have to.
+	* Documentation fix for command line invocation: Test::Prereq
+	calls plan() for you, so you don't have to.
 
 1.025 - Wed Sep  8 00:59:57 2004
-* get rid of the 'redefine' warning when we read the Makefile.PL
+	* get rid of the 'redefine' warning when we read the Makefile.PL
 
 1.024 - Tue Sep  7 19:52:30 2004
-* cleaned up distro
-* bumped version to a full release (the interface is pretty much set)
-* no need to upgrade really (although some modules might require a
-version number above 1.x
+	* cleaned up distro
+	* bumped version to a full release (the interface is pretty much set)
+	* no need to upgrade really (although some modules might require a
+	version number above 1.x
 
 0.23 - Tue Aug 24 19:58:53 2004
-* Changed a few things for demo talk
+	* Changed a few things for demo talk
 
 0.23 - Fri Feb 20 05:42:18 2004
 	* got rid of the File::Find::Rule dependency

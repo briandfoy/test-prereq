@@ -460,7 +460,7 @@ members of the project can shepherd this module appropriately.
 
 Many thanks to:
 
-Andy Lester, Slavin Rezic, Randal Schwartz, Iain Truskett
+Andy Lester, Slavin Rezic, Randal Schwartz, Iain Truskett, Dylan Martin
 
 =head1 AUTHOR
 
