@@ -1,5 +1,11 @@
 # $Id$
 
+1.30 - Wed Jan 11 00:11:21 2006
+	* Tests should now work even if there is nothing in PREREQ_PM. In the
+	previous version, an empty PREREQ_PM made the module think Makefile.PL
+	didn't exit cleanly. 
+	* Everyone should upgrade.
+
 1.29 - Sun Dec 25 20:03:47 2005
 	* Updated some tests that had some problems. No need to upgrade.
 
