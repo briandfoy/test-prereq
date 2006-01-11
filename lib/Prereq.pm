@@ -117,6 +117,8 @@ no warnings;
 
 	$Namespace = $name;
 	@Test::Prereq::prereqs   = sort keys %$hash;
+	
+	1;
 	}
 }
 
@@ -310,7 +312,7 @@ sub _get_prereqs
 	
 	unless( do "./$file" )
 		{
-		print STDERR "_get_prereqs: Error loading $file: $!";
+		print STDERR "_get_prereqs: Error loading $file: $@\n";
 		return;
 		}
 	delete $INC{$file};  # pretend we were never here
