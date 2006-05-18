@@ -13,3 +13,10 @@ pm_to_blib
 Makefile$
 ~$
 .rej$
+\.*bak
+Makefile$
+\.\#
+\.old
+\.orig
+\.rej
+\.mine
