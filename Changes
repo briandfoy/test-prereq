@@ -1,5 +1,8 @@
 # $Id$
 
+1.30 - Wed May 17 22:15:01 2006
+	* Updates to distro and kwalitee. No need to upgrade.
+
 1.30 - Wed Jan 11 00:11:21 2006
 	* Tests should now work even if there is nothing in PREREQ_PM. In the
 	previous version, an empty PREREQ_PM made the module think Makefile.PL
