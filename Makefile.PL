@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
 
 eval "use Test::Manifest 1.14";
 
-WriteMakefile
+WriteMakefile(
 		'NAME'            => 'Test::Prereq',
 		'VERSION_FROM'    => 'lib/Prereq.pm',
 		'PREREQ_PM' => {
