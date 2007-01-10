@@ -468,12 +468,11 @@ Andy Lester, Slavin Rezic, Randal Schwartz, Iain Truskett, Dylan Martin
 
 brian d foy, C<< <bdfoy@cpan.org> >>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT and LICENSE
 
-Copyright 2002-2006, brian d foy, All Rights Reserved.
+Copyright 2002-2007, brian d foy, All rights reserved
 
-You may use, modify, and distribute this package under the
-same terms as Perl itself.
+This software is available under the same terms as perl.
 
 =cut
 
