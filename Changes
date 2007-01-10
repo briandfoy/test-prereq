@@ -1,5 +1,9 @@
 # $Id$
 
+1.32 - Tue Jan  9 22:54:40 2007
+	* updated copyright and license info
+	* no code changes, so no need to upgrade
+
 1.31 - Wed May 17 22:23:23 2006
 	* updates to distro and kwalitee. No need to upgrade
 
