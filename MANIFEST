@@ -5,7 +5,6 @@ lib/Prereq.pm
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
-META.yml			Module meta-data (added by MakeMaker)
 README
 t/get_from_file.t
 t/get_from_prereqs.t
