@@ -7,6 +7,7 @@ WriteMakefile(
 	'NAME'            => 'Test::Prereq',
 	'VERSION_FROM'    => 'lib/Prereq.pm',
 	'LICENSE'   	  => 'perl',
+	'AUTHOR'          => 'brian d foy <bdfoy@cpan.org>',
 
 	'PREREQ_PM' => {
 		'Module::Build'         => '0',
