@@ -1,5 +1,10 @@
 # $Id$
 
+1.33 - Fri Mar 16 23:00:57 2007
+	* Fixed load test to not complain when trying to import the same
+	symbol twice
+	* No code fixes otherwise. No need to upgrade.
+
 1.32 - Tue Jan  9 22:54:40 2007
 	* updated copyright and license info
 	* no code changes, so no need to upgrade
