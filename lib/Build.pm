@@ -49,13 +49,13 @@ it under the same terms as Perl itself.
 
 sub import 
 	{
-    my $self   = shift;
-    my $caller = caller;
-    no strict 'refs';
-    *{$caller.'::prereq_ok'}       = \&prereq_ok;
-
-    $Test->exported_to($caller);
-    $Test->plan(@_);
+	my $self   = shift;
+	my $caller = caller;
+	no strict 'refs';
+	*{$caller.'::prereq_ok'}       = \&prereq_ok;
+	
+	$Test->exported_to($caller);
+	$Test->plan(@_);
 	}
 
 sub prereq_ok
