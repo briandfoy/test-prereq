@@ -16,8 +16,7 @@ Test::Prereq::Build - test prerequisites in Module::Build scripts
 
 =cut
 
-$VERSION = 1.012;
-#sprintf "%d.%03d", q$Revision$ =~ /(\d+)\.(\d+)/;
+$VERSION = 1.013;
 
 use Module::Build;
 use Test::Builder;

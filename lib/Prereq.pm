@@ -86,7 +86,7 @@ use base qw(Exporter);
 use vars qw($VERSION $EXCLUDE_CPANPLUS @EXPORT @prereqs);
 
 
-$VERSION = 1.033;
+$VERSION = 1.034;
 #sprintf "%d.%03d", q$Revision$ =~ /(\d+)\.(\d+)/;
 
 @EXPORT = qw( prereq_ok );
