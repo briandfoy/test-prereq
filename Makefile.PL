@@ -8,7 +8,7 @@ eval "use Test::Manifest 1.14";
 WriteMakefile(
 	'NAME'            => 'Test::Prereq',
 	'VERSION_FROM'    => 'lib/Prereq.pm',
-	'ABSTRACT'        => 'heck if Makefile.PL has the right pre-requisites',
+	'ABSTRACT'        => 'check if Makefile.PL has the right pre-requisites',
 	
 	'LICENSE'   	  => 'perl',
 	'AUTHOR'          => 'brian d foy <bdfoy@cpan.org>',

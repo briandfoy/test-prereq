@@ -2,6 +2,9 @@
 package Test::Prereq;
 use strict;
 
+use warnings;
+no warnings;
+
 =head1 NAME
 
 Test::Prereq - check if Makefile.PL has the right pre-requisites

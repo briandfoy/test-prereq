@@ -5,6 +5,9 @@ use strict;
 use base qw(Test::Prereq);
 use vars qw($VERSION @EXPORT);
 
+use warnings;
+no warnings;
+
 =head1 NAME
 
 Test::Prereq::Build - test prerequisites in Module::Build scripts
@@ -16,7 +19,7 @@ Test::Prereq::Build - test prerequisites in Module::Build scripts
 
 =cut
 
-$VERSION = 1.013;
+$VERSION = 1.034;
 
 use Module::Build;
 use Test::Builder;
