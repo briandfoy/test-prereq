@@ -89,7 +89,7 @@ use base qw(Exporter);
 use vars qw($VERSION $EXCLUDE_CPANPLUS @EXPORT @prereqs);
 
 
-$VERSION = 1.034;
+$VERSION = 1.035;
 #sprintf "%d.%03d", q$Revision$ =~ /(\d+)\.(\d+)/;
 
 @EXPORT = qw( prereq_ok );
@@ -266,7 +266,7 @@ sub _prereq_check
 		{
 		my $modules = $class->_get_from_prereqs( $prereqs );
 
-		foreach my $module ( @$skip )
+		foreach my $module ( @$modules )
 			{
 			delete $loaded->{$module};
 			}
@@ -431,8 +431,9 @@ sub _get_from_file
 	my( $class, $file ) = @_;
 
 	my $module  = Module::Info->new_from_file( $file );
+	$module->die_on_compilation_error(1);
 
-	my @used    = $module->modules_used;
+	my @used    = eval{ $module->modules_used };
 
 	my @modules =
 		sort
@@ -454,13 +455,9 @@ sub _get_from_file
 
 =head1 SOURCE AVAILABILITY
 
-This source is part of a SourceForge project which always has the
-latest sources in CVS, as well as all of the previous releases.
+This source is in Github:
 
-	http://sourceforge.net/projects/brian-d-foy/
-
-If, for some reason, I disappear from the world, one of the other
-members of the project can shepherd this module appropriately.
+	http://github.com/briandfoy/test-prereq
 
 =head1 CONTRIBUTORS
 
@@ -474,7 +471,7 @@ brian d foy, C<< <bdfoy@cpan.org> >>
 
 =head1 COPYRIGHT and LICENSE
 
-Copyright 2002-2007, brian d foy, All rights reserved
+Copyright 2002-2009, brian d foy, All rights reserved
 
 This software is available under the same terms as perl.
 
