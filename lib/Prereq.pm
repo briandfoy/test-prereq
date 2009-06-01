@@ -89,7 +89,7 @@ use base qw(Exporter);
 use vars qw($VERSION $EXCLUDE_CPANPLUS @EXPORT @prereqs);
 
 
-$VERSION = '1.036';
+$VERSION = '1.037';
 
 @EXPORT = qw( prereq_ok );
 
@@ -360,11 +360,11 @@ sub _get_loaded_modules
 
 	my( @libs, @t, @scripts );
 	
-	find( sub { push @libs,    $File::Find::name if m/\.pm$/ }, 'blib/lib' )
+	File::Find::find( sub { push @libs,    $File::Find::name if m/\.pm$/ }, 'blib/lib' )
 		if -e 'blib/lib';
-	find( sub { push @t,       $File::Find::name if m/\.t$/  }, 't' )
+	File::Find::find( sub { push @t,       $File::Find::name if m/\.t$/  }, 't' )
 		if -e 't';
-	find( sub { push @scripts, $File::Find::name if -f $_    }, 'blib/script' )
+	File::Find::find( sub { push @scripts, $File::Find::name if -f $_    }, 'blib/script' )
 		if -e 'blib/script';
 	
 	my @found = ();
@@ -384,7 +384,7 @@ sub _get_test_libraries
 
 	my @found = ();
 	
-	find( sub { push @found, $File::Find::name if m/\.p(l|m)$/ }, 't' );
+	File::Find::find( sub { push @found, $File::Find::name if m/\.p(l|m)$/ }, 't' );
 
 	my @files =
 		map {
@@ -410,7 +410,7 @@ sub _get_dist_modules
 
 	my @found = ();
 	
-	find( sub { push @found, $File::Find::name if m/\.pm$/ }, $_[0] );
+	File::Find::find( sub { push @found, $File::Find::name if m/\.pm$/ }, $_[0] );
 		
 	my @files =
 		map {
