@@ -1,5 +1,9 @@
 # $Id$
 
+1.37 - Mon Jun  1 00:20:54 2009
+	* Fix #46335: qualify calls to find() so Module::Install
+	doesn't intercept them.
+
 1.035 - Sat Aug  2 23:24:14 2008
 	* Cleaning up the Makefile a bit. No need to upgrade.
 
