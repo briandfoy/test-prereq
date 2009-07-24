@@ -22,3 +22,6 @@ Makefile$
 \.orig
 \.rej
 \.mine
+\.git
+_build
+^Makefile.PL
