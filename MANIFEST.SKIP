@@ -11,6 +11,8 @@ MANIFEST.SKIP
 MANIFEST.bak
 pm_to_blib
 Makefile$
+_build$
+Build$
 ~$
 .rej$
 \.*bak
