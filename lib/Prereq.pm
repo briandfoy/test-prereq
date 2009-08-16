@@ -29,6 +29,20 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 	# or from the command line for a one-off check
 	perl -MTest::Prereq -eprereq_ok
 
+    #The prerequisites test take quite some time so the following construct is 
+    #recommended for non-author testers
+	use Test::More;
+	eval "use Test::Prereq::Build";
+
+	my $msg;
+	if ($@) {
+	    $msg = 'Test::Prereq::Build required to test dependencies';
+	} elsif (not $ENV{TEST_AUTHOR}) {
+	    $msg = 'Author test.  Set $ENV{TEST_AUTHOR} to a true value to run.';
+	}
+	plan skip_all => $msg if $msg;
+	prereq_ok();
+
 =head1 DESCRIPTION
 
 The prereq_ok() function examines the modules it finds in blib/lib/,
