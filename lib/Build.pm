@@ -89,5 +89,8 @@ sub Module::Build::new
 
 # fake Module::Build methods
 sub create_build_script { 1 };
+sub add_build_element { 1 };
+sub args { 1 };
+sub notes { 1 };
 
 1;
