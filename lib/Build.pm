@@ -1,4 +1,3 @@
-# $Id$
 package Test::Prereq::Build;
 use strict;
 
@@ -28,12 +27,12 @@ my $Test = Test::Builder->new;
 
 =head1 METHODS
 
-If you have problems, send me your Build.PL.
+If you have problems, send me your F<Build.PL>.
 
-This module overrides methods in Test::Prereq to make it work with
-Module::Build.
+This module overrides methods in C<Test::Prereq> to make it work with
+C<Module::Build>.
 
-This module does not have any public methods.  See L<Test::Prereq>.
+This module does not have any public methods. See L<Test::Prereq>.
 
 =head1 AUTHOR
 
@@ -41,7 +40,7 @@ brian d foy, C<< <bdfoy@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2002-2009 brian d foy.  All rights reserved.
+Copyright (c) 2002-2010 brian d foy.  All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
@@ -78,6 +77,7 @@ sub Module::Build::new
 	my @requires = sort grep $_ ne 'perl', (
 		keys %{ $hash{requires} },
 		keys %{ $hash{build_requires} },
+		keys %{ $hash{configure_requires} },
 		);
 
 	@Test::Prereq::prereqs = @requires;
