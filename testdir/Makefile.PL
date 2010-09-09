@@ -4,11 +4,21 @@ WriteMakefile
         (
         'NAME'      => 'Test::Prereq',
         'VERSION'   => '0.05',
+
+		'CONFIGURE_REQUIRES' => {
+			'Test::Manifest' => '0',
+			},
+			
+		'BUILD_REQUIRES' => {
+			'Test::Output' => '0',
+			},
+
  		'PREREQ_PM' => {
- 			'HTTP::Size'      => 0,
+ 			'HTTP::Size'      => '0',
+ 			'XML::Twig'       => '0',
   			},
-        'PM'        => 
-        	{
+
+        'PM' => {
             'lib/Prereq.pm' => '$(INST_LIBDIR)/Prereq.pm',
             },
  
@@ -16,4 +26,4 @@ WriteMakefile
         test   => { TESTS => $tests },
         );
 
-0;
+1;
