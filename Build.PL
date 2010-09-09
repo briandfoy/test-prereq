@@ -25,13 +25,13 @@ my $build = $class->new(
 		},
 		
 	build_requires => {
+		'perl'                   => '5.010',
 		'Test::Builder'          => '0',
 		'Test::Builder::Tester'  => '0',
 		'Test::More'             => '0',
 		},
 		
 	requires       => {
-		'perl'                   => '5.008',
 		'Module::Build'          => '0',
 		'Module::CoreList'       => '0',
 		'Module::Info'           => '0',
@@ -39,6 +39,7 @@ my $build = $class->new(
 
 	pm_files        => {
 		'lib/Prereq.pm' => 'lib/Test/Prereq.pm',
+		'lib/Build.pm'  => 'lib/Test/Prereq/Build.pm',
 		},
 
 	add_to_cleanup  => [ qw|Test-* t/test_manifest| ], 
