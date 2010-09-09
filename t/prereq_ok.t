@@ -1,4 +1,2 @@
-# $Id$
-
-use Test::Prereq;
+use Test::Prereq::Build;
 prereq_ok( undef, undef, [ qw(CPANPLUS::Internals::System) ] );

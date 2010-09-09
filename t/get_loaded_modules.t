@@ -1,6 +1,4 @@
-# $Id$
-
-use Test::More tests => 4;
+use Test::More tests => 1;
 
 use Test::Prereq;
 
@@ -13,12 +11,13 @@ print STDERR "Didn't find right modules! Found < @$keys >\n" unless
 ok(
   eq_array( $keys, 
 		[ 
-		qw( Module::Build Module::CoreList Module::Info 
-			Test::Prereq Test::Prereq::Build) 
+		qw( Module::Info Test::Prereq Test::Prereq::Build ) 
 		] ),
 	'Right modules for modules and tests'
 	);
 }
+
+__END__
 
 TODO: {
 local $TODO = "This interface changed, so these tests are not valid";
