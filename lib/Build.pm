@@ -78,6 +78,7 @@ sub Module::Build::new
 		keys %{ $hash{requires} },
 		keys %{ $hash{build_requires} },
 		keys %{ $hash{configure_requires} },
+		keys %{ $hash{recommends} },
 		);
 
 	@Test::Prereq::prereqs = @requires;
