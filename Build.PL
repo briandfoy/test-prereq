@@ -42,7 +42,7 @@ my $build = $class->new(
 		'lib/Build.pm'  => 'lib/Test/Prereq/Build.pm',
 		},
 
-	add_to_cleanup  => [ qw|Test-* t/test_manifest| ], 
+	add_to_cleanup  => [ qw|Test-*| ], 
 	);
 
 $build->create_build_script;
