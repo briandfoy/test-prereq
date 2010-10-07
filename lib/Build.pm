@@ -18,7 +18,7 @@ Test::Prereq::Build - test prerequisites in Module::Build scripts
 
 =cut
 
-$VERSION = '1.037_01';
+$VERSION = '1.037_02';
 
 use Module::Build;
 use Test::Builder;
@@ -33,6 +33,21 @@ This module overrides methods in C<Test::Prereq> to make it work with
 C<Module::Build>.
 
 This module does not have any public methods. See L<Test::Prereq>.
+
+To make everything work out with C<Module::Build>, this module overrides
+some methods to do nothing.
+
+=over 4
+
+=item create_build_script
+
+=item add_build_element
+
+=item args
+
+=item notes
+
+=back
 
 =head1 AUTHOR
 
