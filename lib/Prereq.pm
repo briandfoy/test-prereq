@@ -105,7 +105,7 @@ use base qw(Exporter);
 use vars qw($VERSION $EXCLUDE_CPANPLUS @EXPORT @prereqs);
 
 
-$VERSION = '1.037_01';
+$VERSION = '1.037_02';
 
 @EXPORT = qw( prereq_ok );
 
