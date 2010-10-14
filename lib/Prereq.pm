@@ -110,7 +110,6 @@ $VERSION = '1.037_02';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);
-use CPAN;
 use ExtUtils::MakeMaker;
 use File::Find;
 use Module::CoreList;
@@ -171,6 +170,18 @@ libraries found in F<t/> from the reported prerequisites.
 The optional third argument is an array reference to a list
 of names that C<prereq_ok> should ignore. You might want to use
 this if your tests do funny things with C<require>.
+
+Versions prior to 1.038 would use CPAN.pm to virtually include
+prerequisites in distributions that you declared explicitly. This isn't
+really a good idea. Some modules have moved to different distributions,
+so you should just specify all the modules that you use instead of relying
+on a particular distribution to provide them. Not only that, expanding
+distributions with CPAN.pm takes forever.
+
+If you want the old behavior, set the C<TEST_PREREQ_EXPAND_WITH_CPAN> 
+environment variable to a true value.
+
+
 
 =cut
 
@@ -259,7 +270,7 @@ sub _prereq_check
 	# if anything is left, look for modules in the distributions
 	# in PREREQ_PM.  this is slow, so we should only do it if
 	# we might need it.
-	if( keys %$loaded )
+	if( keys %$loaded and $class->_should_i_expand_prereqs )
 		{
 		my $modules = $class->_get_from_prereqs( $prereqs );
 
@@ -325,13 +336,18 @@ sub _get_prereqs
 	}
 
 # expand prereqs and see what we get
+
+sub _should_i_expand_prereqs { !! $ENV{TEST_PREREQ_EXPAND_WITH_CPAN} }
+
 sub _get_from_prereqs
 	{
 	my $class   = shift;
 	my $modules = shift;
 
 	my @dist_modules = ();
-
+	return [] unless $class->_should_i_expand_prereqs;
+	
+	require CPAN;
 	foreach my $module ( @$modules )
 		{
 		my $mod      = CPAN::Shell->expand( "Module", $module );
