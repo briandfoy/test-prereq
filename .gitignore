@@ -8,3 +8,4 @@ Build
 *.bak
 _build
 MYMETA.yml
+META.yml
