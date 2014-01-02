@@ -1,10 +1,12 @@
-Build.PL
 Changes
 examples/README
-lib/Build.pm
-lib/Prereq.pm
+lib/Test/Prereq.pm
+lib/Test/Prereq/Build.pm
 LICENSE
+Makefile.PL
 MANIFEST			This list of files
+MANIFEST.SKIP
+META.yml
 README
 t/get_from_file.t
 t/get_from_prereqs.t
