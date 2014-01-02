@@ -20,5 +20,6 @@ t/prereq_ok.t
 t/prior_plan.t
 t/test_manifest
 testdir/bad_makefile/Makefile.PL
-testdir/Makefile.PL
-testdir/MANIFEST
+testdir/build_pl/Build.PL
+testdir/good_makefile/Makefile.PL
+testdir/good_makefile/MANIFEST
