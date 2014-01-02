@@ -15,14 +15,17 @@ WriteMakefile(
 
 	'BUILD_REQUIRES' => {
 		'ExtUtils::MakeMaker'    => '6.55',
-		'Module::CoreList'       => '0',
-		'Module::Info'           => '0',
 		},
 
-	'PREREQ_PM'	    => {
+	'TEST_REQUIRES' => {
 		'Test::Builder'          => '0',
 		'Test::Builder::Tester'  => '0',
 		'Test::More'             => '0.95',
+		},
+
+	'PREREQ_PM'	    => {
+		'Module::CoreList'       => '0',
+		'Module::Info'           => '0',
 		},
 
 	'clean' => { FILES => 'Test-Prereq-*' },
