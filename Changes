@@ -2,6 +2,11 @@
 	* Fix #46335: qualify calls to find() so Module::Install
 	doesn't intercept them.
 
+1.38 - Thu Jan  2 15:38:44 2014
+	* Use Makefile.PL instead of Build.PL since Module::Build
+	is likely to be deprecated
+	* Fix up Pod encoding issues
+
 1.035 - Sat Aug  2 23:24:14 2008
 	* Cleaning up the Makefile a bit. No need to upgrade.
 
