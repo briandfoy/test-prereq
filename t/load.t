@@ -4,8 +4,7 @@ BEGIN {
 
 use Test::More tests => 2 * scalar @classes;
 
-foreach my $class ( @classes )
-	{
+foreach my $class ( @classes ) {
 	undef &main::prereq_ok;
 	BAIL_OUT( "Could not compile $class!" ) unless use_ok( $class );
 	ok( defined &main::prereq_ok, "prereq_ok imported" );
