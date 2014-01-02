@@ -1,6 +1,4 @@
-# $Id$
-
-1.37 - Mon Jun  1 00:20:54 2009
+1.037 - Mon Jun  1 00:20:54 2009
 	* Fix #46335: qualify calls to find() so Module::Install
 	doesn't intercept them.
 
@@ -8,7 +6,7 @@
 	* Cleaning up the Makefile a bit. No need to upgrade.
 
 1.034 - Sat Jul 12 21:32:16 2008
-	* Various minor cleanups. No bg whoop.
+	* Various minor cleanups. No big whoop.
 
 1.033 - Fri Mar 16 23:00:57 2007
 	* Fixed load test to not complain when trying to import the same
@@ -22,16 +20,16 @@
 1.031 - Wed May 17 22:23:23 2006
 	* updates to distro and kwalitee. No need to upgrade
 
-1.30 - Wed May 17 22:15:01 2006
+1.030 - Wed May 17 22:15:01 2006
 	* Updates to distro and kwalitee. No need to upgrade.
 
-1.30 - Wed Jan 11 00:11:21 2006
+1.030 - Wed Jan 11 00:11:21 2006
 	* Tests should now work even if there is nothing in PREREQ_PM. In the
 	previous version, an empty PREREQ_PM made the module think Makefile.PL
 	didn't exit cleanly. 
 	* Everyone should upgrade.
 
-1.29 - Sun Dec 25 20:03:47 2005
+1.029 - Sun Dec 25 20:03:47 2005
 	* Updated some tests that had some problems. No need to upgrade.
 
 1.028 - Wed Jul 13 17:31:13 2005
