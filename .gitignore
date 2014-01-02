@@ -10,3 +10,4 @@ _build
 MYMETA.*
 META.*
 */MYMETA.*
+*/Makefile
