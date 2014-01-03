@@ -1,4 +1,4 @@
-use ExtUtils::MakeMaker 6.55;
+use ExtUtils::MakeMaker 6.64;
 
 require 5.008;
 
@@ -14,7 +14,7 @@ WriteMakefile(
 	'NORECURS'      => 1,
 
 	'BUILD_REQUIRES' => {
-		'ExtUtils::MakeMaker'    => '6.55',
+		'ExtUtils::MakeMaker'    => '6.64',
 		},
 
 	'TEST_REQUIRES' => {

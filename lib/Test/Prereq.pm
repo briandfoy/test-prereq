@@ -135,7 +135,7 @@ no warnings;
 	my $name = $hash{NAME};
 	my %prereqs =
 		map { defined $_ ? %$_ : () }
-		@hash{qw(PREREQ_PM BUILD_REQUIRES CONFIGURE_REQUIRES)};
+		@hash{qw(PREREQ_PM BUILD_REQUIRES CONFIGURE_REQUIRES TEST_REQUIRES)};
 
 	$Namespace = $name;
 	@Test::Prereq::prereqs   = sort keys %prereqs;
