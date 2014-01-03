@@ -1,21 +1,23 @@
-use Test::More tests => 1;
+use Test::More 0.95;
 
-use Test::Prereq;
+use_ok( 'Test::Prereq' );
 
-{
-my $modules = Test::Prereq->_get_loaded_modules();
+subtest 'modules' => sub {
+	my $modules = Test::Prereq->_get_loaded_modules();
 
-my $keys = [ grep ! /^CPANPLUS/, sort keys %$modules ];
+	my $keys = [ grep ! /^CPANPLUS/, sort keys %$modules ];
 
-print STDERR "Didn't find right modules! Found < @$keys >\n" unless
-ok(
-  eq_array( $keys, 
-		[ 
-		qw( Module::Info Test::Prereq Test::Prereq::Build ) 
-		] ),
-	'Right modules for modules and tests'
-	);
-}
+	my @expected = qw( Module::Info Test::Prereq Test::Prereq::Build );
+	unshift @expected, 'Module::Build' if $] =~ m/\A5.008/;
+
+	@expected = sort @expected;
+
+	ok( eq_array( $keys, \@expected ), 'Right modules for modules and tests' )
+		or
+	diag( "Didn't find right modules!\n\tFound < @$keys >\n\tExpected < @expected >\n" );
+	};
+
+done_testing();
 
 __END__
 
