@@ -2,6 +2,10 @@
 	* Fix #46335: qualify calls to find() so Module::Install
 	doesn't intercept them.
 
+1.38_01 - Fri Jan  3 11:12:54 2014
+	* Handle TEST_REQUIRES
+	* Fixes for v5.8, which doesn't include Module::Build
+
 1.38 - Thu Jan  2 15:38:44 2014
 	* Use Makefile.PL instead of Build.PL since Module::Build
 	is likely to be deprecated
