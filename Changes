@@ -2,6 +2,9 @@
 	* Fix #46335: qualify calls to find() so Module::Install
 	doesn't intercept them.
 
+1.38_02 - Mon Jan  6 02:38:59 2014
+	* Fixup for CONFIGURE_REQUIRES (GitHub Issue #2)
+
 1.38_01 - Fri Jan  3 11:12:54 2014
 	* Handle TEST_REQUIRES
 	* Fixes for v5.8, which doesn't include Module::Build
