@@ -13,7 +13,7 @@ WriteMakefile(
 
 	'NORECURS'      => 1,
 
-	'BUILD_REQUIRES' => {
+	'CONFIGURE_REQUIRES' => {
 		'ExtUtils::MakeMaker'    => '6.64',
 		},
 
