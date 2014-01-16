@@ -8,11 +8,11 @@ subtest 'modules' => sub {
 	my $keys = [ grep ! /^CPANPLUS/, sort keys %$modules ];
 
 	my @expected = qw( Module::Info Test::Prereq Test::Prereq::Build );
-	unshift @expected, 'Module::Build' if $] =~ m/\A5.008/;
+	unshift @expected, qw(Module::Build Module::CoreList) if $] =~ m/\A5.008/;
 
 	@expected = sort @expected;
 
-	ok( eq_array( $keys, \@expected ), 'Right modules for modules and tests' )
+	is_deeply( $keys, \@expected, 'Right modules for modules and tests' )
 		or
 	diag( "Didn't find right modules!\n\tFound < @$keys >\n\tExpected < @expected >\n" );
 	};
