@@ -2,25 +2,34 @@ use Test::More 0.95;
 
 use Test::Prereq;
 
-my $modules = Test::Prereq->_get_from_file( 't/pod.t' );
-my @modules = grep ! /^CPANPLUS/, @$modules;
+my @prereq_files = qw( Module::Info );
+push @prereq_files, qw( Module::CoreList ) if $] =~ /\A5\.008/;
 
-diag "Did not find right modules from t/pod.t!\n" .
-	"Found <@modules>\n" unless
-	ok(
-		eq_array( \@modules, [] ),
-			'Right modules for t/pod.t'
-			);
+my @tests = (
+	[ 't/pod.t',            [ ]                 ],
+	[ 'lib/Test/Prereq.pm', [ @prereq_files ]   ],
+	);
 
-$modules = Test::Prereq->_get_from_file( 'lib/Test/Prereq.pm' );
-@modules = grep ! /^CPANPLUS/, @$modules;
+foreach my $test ( @tests ) {
+	my( $file, $expected ) = @$test;
 
-diag "Did not find right modules for lib/Test/Prereq.pm!\n" .
-	 "Found <@modules>\n" unless
-		ok(
-			eq_array( \@modules, [ 
-			qw( Module::Info ) ] ),
-			'Right modules for lib/Test/Prereq.pm'
-			);
+	subtest pod => sub {
+		my $modules = from_file( $file );
+
+		diag "Did not find right modules for $file!\nFound <@$modules>\n" 
+			unless is_deeply( $modules, $expected,
+					"Found the expected modules for $file"
+					);
+		};
+	}
+
+sub from_file {
+	my( $file ) = @_;
+	
+	my $modules = Test::Prereq->_get_from_file( $file );
+	my @modules = grep ! /^CPANPLUS/, @$modules;
+
+	return \@modules;
+	}
 
 done_testing();
