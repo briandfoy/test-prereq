@@ -1,5 +1,8 @@
 # Changes for Test::Prereq
 
+1.38_05 - Fri Jan 17 10:59:21 2014
+	* More adjustments for 5.8 tests.
+
 1.38_04 - Thu Jan 16 10:13:23 2014
 	Refactor some tests, with more exploration for 5.8 failures.
 
