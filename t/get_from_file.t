@@ -3,7 +3,6 @@ use Test::More 0.95;
 use Test::Prereq;
 
 my @prereq_files = qw( Module::Info );
-push @prereq_files, qw( Module::CoreList ) if $] =~ /\A5\.008/;
 
 my @tests = (
 	[ 't/pod.t',            [ ]                 ],
