@@ -89,30 +89,30 @@
 	* stripped bad whitespace from Pod, no code changes
 
 0.18 Mon Nov  4 19:25:56 CST 2002
-	- skip CPANPLUS modules by default.  still haven't
+	* skip CPANPLUS modules by default.  still haven't
 	figured this out.
 
 0.17 Wed Oct 23 11:55:28 CDT 2002
-	- removed extra call to CPAN.pm.  this should make
+	* removed extra call to CPAN.pm.  this should make
 	things run faster.
 
 0.16 Fri Oct 11 03:46:12 CDT 2002
-	- add MAN3PODS to WriteMakefile to make man
+	* add MAN3PODS to WriteMakefile to make man
 	pages show up in the right place
 
 0.15 Thu Oct 10 19:34:20 CDT 2002
-	- more changes to get around CPANPLUS
+	* more changes to get around CPANPLUS
 
 0.14 Thu Oct 10 17:19:27 CDT 2002
-	- test suite gives better error output (so i can
+	* test suite gives better error output (so i can
 	figure out what's up with CPANPLUS)
 
 0.13 Wed Oct  9 19:37:47 EDT 2002
-	- expands distributions in PREREQ_PM to look for
+	* expands distributions in PREREQ_PM to look for
 	modules implicitly declared
 
 0.10 Fri Oct  4 18:27:57 CDT 2002
-	- added support for Module::Build
+	* added support for Module::Build
 
 0.07 Mon Sep 30 00:53:19 PDT 2002
-	- cleaned up Makefile.PL for perl5.8.0 weirdness
+	* cleaned up Makefile.PL for perl5.8.0 weirdness
