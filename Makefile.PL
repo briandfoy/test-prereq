@@ -1,20 +1,23 @@
-use ExtUtils::MakeMaker 6.64;
-
 require 5.010;
+use strict;
+use warnings;
 
-eval "use Test::Manifest 1.21";
 
-WriteMakefile(
+my $github    = 'https://github.com/briandfoy/test-prereq';
+my $main_file = 'lib/Test/Prereq.pm';
+
+my %WriteMakefile = (
 	'NAME'          => 'Test::Prereq',
-	'ABSTRACT'      => 'Ensure a build file lists all pre-requisites',
-	'VERSION_FROM'  => 'lib/Test/Prereq.pm',
+	'ABSTRACT_FROM' => $main_file,
+	'VERSION_FROM'  => $main_file,
 	'LICENSE'       => 'perl',
 	'AUTHOR'        => 'brian d foy <bdfoy@cpan.org>',
 
-	'NORECURS'      => 1,
-
 	'CONFIGURE_REQUIRES' => {
-		'ExtUtils::MakeMaker'    => '6.64',
+		'ExtUtils::MakeMaker' => '6.64',
+		},
+
+	'BUILD_REQUIRES' => {
 		},
 
 	'TEST_REQUIRES' => {
@@ -28,16 +31,42 @@ WriteMakefile(
 		'Module::Info'           => '0',
 		},
 
-	'clean' => { FILES => 'Test-Prereq-*' },
-
 	'META_MERGE' => {
-        'meta-spec' => { version => 2 },
+		'meta-spec' => { version => 2 },
 		resources => {
 			repository => {
 				type => 'git',
-				url  => 'git@github.com:briandfoy/test-prereq.git',
-				web  => 'https://github.com/briandfoy/test-prereq',
+				url  => "$github.git",
+				web  => $github,
 				},
+			bugtraker => {
+				web    => "$github/issues",
+				},
+			homepage => $github,
 			},
 		},
+
+	'NORECURS'      => 1,
+
+	'clean' => { FILES => 'Test-Prereq-*' },
 	);
+
+sub arguments { \%WriteMakefile }
+
+do_it() unless caller;
+sub do_it {
+	require File::Spec;
+	my $MM ='ExtUtils::MakeMaker';
+	my $MM_version =
+		eval{ "$MM " . $WriteMakefile{'CONFIGURE_REQUIRES'}{'ExtUtils::MakeMaker'} }
+			//
+		"$MM 6.64";
+	eval "use $MM_version";
+	eval "use Test::Manifest 1.21" 
+		if -e File::Spec->catfile( qw(t test_manifest) );
+	WriteMakefile( %WriteMakefile );
+	}
+
+
+no warnings;
+__PACKAGE__;
