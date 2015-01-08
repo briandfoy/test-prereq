@@ -2,12 +2,14 @@ require 5.010;
 use strict;
 use warnings;
 
+use File::Spec::Functions qw(catfile);
 
+my $module    = 'Test::Prereq';
 my $github    = 'https://github.com/briandfoy/test-prereq';
-my $main_file = 'lib/Test/Prereq.pm';
+my $main_file = catfile( 'lib', split /::/, "$module.pm" );
 
 my %WriteMakefile = (
-	'NAME'          => 'Test::Prereq',
+	'NAME'          => $module,
 	'ABSTRACT_FROM' => $main_file,
 	'VERSION_FROM'  => $main_file,
 	'LICENSE'       => 'perl',
