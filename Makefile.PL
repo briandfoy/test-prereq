@@ -53,7 +53,7 @@ my %WriteMakefile = (
 
 	'NORECURS'      => 1,
 
-	'clean' => { FILES => 'Test-Prereq-*' },
+	'clean' => { FILES => "$dist-*" },
 	);
 
 sub arguments { \%WriteMakefile }
