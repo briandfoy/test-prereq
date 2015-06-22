@@ -1,5 +1,10 @@
 Revision history for Perl module Test::Prereq
 
+1.038_06 2015-06-22T18:06:54Z
+	* Adjust default list for v5.20 kicking out Module::Build
+	https://bugs.debian.org/789479
+	RT #105398
+
 1.38_05 - 2014-01-17
 	* More adjustments for 5.8 tests.
 
