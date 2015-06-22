@@ -47,6 +47,13 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 
 =head1 DESCRIPTION
 
+----------------------------------------------------------------------
+I made this module a long time ago when it was difficult to get at
+the meta-data hidden in a build file without running the build file.
+I've solved my problem in a different way, and my problem is all I 
+realyl cared about. So, this module needs a new maintainer!
+----------------------------------------------------------------------
+
 The C<prereq_ok()> function examines the modules it finds in
 F<blib/lib/>, F<blib/script>, and the test files it finds in F<t/>
 (and F<test.pl>). It figures out which modules they use, skips the
@@ -107,7 +114,7 @@ use base qw(Exporter);
 use vars qw($VERSION $EXCLUDE_CPANPLUS @EXPORT @prereqs);
 
 
-$VERSION = '1.038_05';
+$VERSION = '1.038_06';
 
 @EXPORT = qw( prereq_ok );
 
