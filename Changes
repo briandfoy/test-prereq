@@ -1,5 +1,8 @@
 Revision history for Perl module Test::Prereq
 
+1.038_07 2015-06-22T21:41:25Z
+	* Don't install README.pod
+
 1.038_06 2015-06-22T18:06:54Z
 	* Adjust default list for v5.20 kicking out Module::Build
 	https://bugs.debian.org/789479
