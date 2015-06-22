@@ -93,7 +93,11 @@ my %WriteMakefile = (
 
 sub arguments { \%WriteMakefile }
 
-do_it() unless caller;
+# Normally I'd just bail out if there is a caller, but this particular
+# module loads the file then expects to run WriteMakefile(). If
+my @caller = caller(1);
+do_it() unless( caller and $caller[3] !~ /::_get_prereqs\z/ );
+
 sub do_it {
 	require File::Spec;
 	my $MM ='ExtUtils::MakeMaker';
