@@ -7,7 +7,7 @@ diag( "Missing Module::CoreList entry for $]" )
 	unless exists $Module::CoreList::version{ $] };
 
 my @ignore = qw(CPANPLUS::Internals::System);
-push @ignore, qw(Module::Build) if $] =~ /\A5\.008/;
+push @ignore, qw(Module::Build) if $] =~ /\A5\.008/ or $] > 5.020002;
 
 my $rc = prereq_ok( undef, undef, \@ignore );
 
