@@ -1,5 +1,6 @@
 Changes
 examples/README
+INSTALL.SKIP
 lib/Test/Prereq.pm
 lib/Test/Prereq/Build.pm
 LICENSE
