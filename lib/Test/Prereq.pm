@@ -69,7 +69,7 @@ C<Module::Info> only tells C<Test::Prereq> which modules you used, not
 which distribution they came in. This can be a problem for things in
 packages like libnet, libwww, Tk, and so on. At the moment
 C<Test::Prereq> asks CPAN.pm to expand anything in C<PREREQ_PM> to see
-if one of the distributions you explicity list contains the module you
+if one of the distributions you explicitly list contains the module you
 actually used. This might fail in some cases. Please send me anything
 that does not do what you think it should.
 
