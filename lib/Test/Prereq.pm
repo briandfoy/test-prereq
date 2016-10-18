@@ -493,8 +493,8 @@ brian d foy, C<< <bdfoy@cpan.org> >>
 
 =head1 COPYRIGHT and LICENSE
 
-Copyright © 2002-2015, brian d foy <bdfoy@cpan.org>. All rights reserved.
-This software is available under the same terms as perl.
+Copyright © 2002-2016, brian d foy <bdfoy@cpan.org>. All rights reserved.
+This software is available under the Artistic License 2.
 
 =cut
 
