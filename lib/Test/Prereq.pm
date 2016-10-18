@@ -31,7 +31,7 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 	# or from the command line for a one-off check
 	perl -MTest::Prereq -eprereq_ok
 
-    #The prerequisites test take quite some time so the following construct is 
+    #The prerequisites test take quite some time so the following construct is
     #recommended for non-author testers
 	use Test::More;
 	eval "use Test::Prereq::Build";
@@ -50,7 +50,7 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 ----------------------------------------------------------------------
 I made this module a long time ago when it was difficult to get at
 the meta-data hidden in a build file without running the build file.
-I've solved my problem in a different way, and my problem is all I 
+I've solved my problem in a different way, and my problem is all I
 realyl cared about. So, this module needs a new maintainer!
 ----------------------------------------------------------------------
 
@@ -146,7 +146,7 @@ no warnings;
 
 	$Namespace = $name;
 	@Test::Prereq::prereqs   = sort keys %prereqs;
-	
+
 	1;
 	}
 }
@@ -187,7 +187,7 @@ so you should just specify all the modules that you use instead of relying
 on a particular distribution to provide them. Not only that, expanding
 distributions with CPAN.pm takes forever.
 
-If you want the old behavior, set the C<TEST_PREREQ_EXPAND_WITH_CPAN> 
+If you want the old behavior, set the C<TEST_PREREQ_EXPAND_WITH_CPAN>
 environment variable to a true value.
 
 
@@ -203,7 +203,7 @@ sub prereq_ok
 	__PACKAGE__->_prereq_check( @_ );
 	}
 
-sub import 
+sub import
 	{
     my $self   = shift;
     my $caller = caller;
@@ -239,9 +239,9 @@ sub _prereq_check
 			$class->_master_file . " did not return a true value.\n" );
 		return 0;
 		}
-	
+
 	my $loaded  = $class->_get_loaded_modules();
-	
+
 	unless( $loaded )
 		{
 		$class->_not_ok( "\tCouldn't look up the modules for some reasons.\n" ,
@@ -307,7 +307,7 @@ sub _prereq_check
 		{
 		$Test->ok( 1, $name );
 		}
-	
+
 	return 1;
 	}
 
@@ -318,7 +318,7 @@ sub _not_ok
 	$Test->ok( 0, $name );
 	$Test->diag( join "", @message );
 	}
-	
+
 sub _master_file { 'Makefile.PL' }
 
 sub _get_prereqs
@@ -330,7 +330,7 @@ sub _get_prereqs
 
 	{
 	local $^W = 0;
-	
+
 	unless( do "./$file" )
 		{
 		print STDERR "_get_prereqs: Error loading $file: $@\n";
@@ -338,7 +338,7 @@ sub _get_prereqs
 		}
 	delete $INC{$file};  # pretend we were never here
 	}
-	
+
 	my @modules = sort @Test::Prereq::prereqs;
 	@Test::Prereq::prereqs = ();
 	return \@modules;
@@ -355,7 +355,7 @@ sub _get_from_prereqs
 
 	my @dist_modules = ();
 	return [] unless $class->_should_i_expand_prereqs;
-	
+
 	require CPAN;
 	foreach my $module ( @$modules )
 		{
@@ -382,14 +382,14 @@ sub _get_loaded_modules
 #	return unless( -d $_[0] and -d $_[1] );
 
 	my( @libs, @t, @scripts );
-	
+
 	File::Find::find( sub { push @libs,    $File::Find::name if m/\.pm$/ }, 'blib/lib' )
 		if -e 'blib/lib';
 	File::Find::find( sub { push @t,       $File::Find::name if m/\.t$/  }, 't' )
 		if -e 't';
 	File::Find::find( sub { push @scripts, $File::Find::name if -f $_    }, 'blib/script' )
 		if -e 'blib/script';
-	
+
 	my @found = ();
 	foreach my $file ( @libs, @t, @scripts )
 		{
@@ -406,7 +406,7 @@ sub _get_test_libraries
 	my $dirsep = "/";
 
 	my @found = ();
-	
+
 	File::Find::find( sub { push @found, $File::Find::name if m/\.p(l|m)$/ }, 't' );
 
 	my @files =
@@ -432,9 +432,9 @@ sub _get_dist_modules
 	my $dirsep = "/";
 
 	my @found = ();
-	
+
 	File::Find::find( sub { push @found, $File::Find::name if m/\.pm$/ }, $_[0] );
-		
+
 	my @files =
 		map {
 			my $x = $_;
