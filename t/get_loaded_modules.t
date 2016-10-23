@@ -7,7 +7,7 @@ subtest 'modules' => sub {
 
 	my $keys = [ grep ! /^CPANPLUS/, sort keys %$modules ];
 
-	my @expected = qw( Module::Info Test::Prereq Test::Prereq::Build );
+	my @expected = qw( Module::Extract::Use Test::Prereq Test::Prereq::Build );
 	unshift @expected, qw(Module::Build) if $] =~ m/\A5.008/ or $] > 5.020002;
 
 	@expected = sort @expected;

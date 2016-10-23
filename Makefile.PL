@@ -68,7 +68,7 @@ my %WriteMakefile = (
 
 	'PREREQ_PM'	    => {
 		'Module::CoreList'       => '0',
-		'Module::Info'           => '0',
+		'Module::Extract::Use'   => '0',
 		},
 
 	'META_MERGE' => {

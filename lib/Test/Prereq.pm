@@ -122,11 +122,13 @@ use Carp qw(carp);
 use ExtUtils::MakeMaker;
 use File::Find;
 use Module::CoreList;
-use Module::Info;
+use Module::Extract::Use;
 use Test::Builder;
 use Test::More;
 
 my $Test = Test::Builder->new;
+
+my $Extractor = Module::Extract::Use->new;
 
 my $Namespace = '';
 
@@ -452,10 +454,7 @@ sub _get_from_file
 	{
 	my( $class, $file ) = @_;
 
-	my $module  = Module::Info->new_from_file( $file );
-	$module->die_on_compilation_error(1);
-
-	my @used    = eval{ $module->modules_used };
+	my @used = $Extractor->get_modules( $file );
 
 	my @modules =
 		sort

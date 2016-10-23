@@ -2,7 +2,7 @@ use Test::More 0.95;
 
 use Test::Prereq;
 
-my @prereq_files = qw( Module::Info );
+my @prereq_files = qw( Module::Extract::Use );
 
 my @tests = (
 	[ 't/pod.t',            [ ]                 ],
