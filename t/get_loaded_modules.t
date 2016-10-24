@@ -4,15 +4,9 @@ use_ok( 'Test::Prereq' );
 
 subtest 'modules' => sub {
 	my $modules = Test::Prereq->_get_loaded_modules();
-
-	my $keys = [ grep ! /^CPANPLUS/, sort keys %$modules ];
-
-	my @expected = qw( Module::Info Test::Prereq Test::Prereq::Build );
-	unshift @expected, qw(Module::Build) if $] =~ m/\A5.008/ or $] > 5.020002;
-
-	@expected = sort @expected;
-
-	is_deeply( $keys, \@expected, 'Right modules for modules and tests' )
+	my @keys = sort keys %$modules;
+	my @expected = sort qw( Carp Cwd ExtUtils::MakeMaker File::Find Module::Build Module::Extract::Use Test::Builder Test::More Test::Prereq Test::Prereq::Build base lib strict utf8 vars warnings );
+	is_deeply( \@keys, \@expected, 'Right modules for modules and tests' )
 		or
 	diag( "Didn't find right modules!\n\tFound < @$keys >\n\tExpected < @expected >\n" );
 	};
