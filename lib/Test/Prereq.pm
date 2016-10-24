@@ -2,6 +2,8 @@ package Test::Prereq;
 use strict;
 use utf8;
 
+use v5.22;
+
 use warnings;
 no warnings;
 
@@ -47,59 +49,14 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 
 =head1 DESCRIPTION
 
-----------------------------------------------------------------------
-I made this module a long time ago when it was difficult to get at
-the meta-data hidden in a build file without running the build file.
-I've solved my problem in a different way, and my problem is all I
-realyl cared about. So, this module needs a new maintainer!
-----------------------------------------------------------------------
-
 The C<prereq_ok()> function examines the modules it finds in
 F<blib/lib/>, F<blib/script>, and the test files it finds in F<t/>
-(and F<test.pl>). It figures out which modules they use, skips the
-modules that are in the Perl core, and compares the remaining list of
-modules to those in the C<PREREQ_PM> section of F<Makefile.PL>.
+(and F<test.pl>). It figures out which modules they use and compares
+that list of modules to those in the C<PREREQ_PM> section of
+F<Makefile.PL>.
 
 If you use C<Module::Build> instead, see L<Test::Prereq::Build>
 instead.
-
-=head2 Modules Test::Prereq can't find
-
-C<Module::Info> only tells C<Test::Prereq> which modules you used, not
-which distribution they came in. This can be a problem for things in
-packages like libnet, libwww, Tk, and so on. At the moment
-C<Test::Prereq> asks CPAN.pm to expand anything in C<PREREQ_PM> to see
-if one of the distributions you explicitly list contains the module you
-actually used. This might fail in some cases. Please send me anything
-that does not do what you think it should.
-
-C<Test::Prereq> only asks CPAN.pm for help if it needs it, since
-CPAN.pm can be slow if it has to fetch things from the network. Once
-it fetches the right things, it should be much faster.
-
-=head2 Problem with Module::Info
-
-C<Module::Info> appears to do something weird if a file it analyzes
-does not use (or require) any modules. You may get a message like
-
-Can't locate object method "name" via package "B::NULL" at
-/usr/perl5.8.0/lib/site_perl/5.8.0/B/Module/Info.pm line 176.
-
-Also, if a file cannot compile, C<Module::Info> dumps a lot of text to
-the terminal. You probably want to bail out of testing if the files do
-not compile, though.
-
-=head2 Problem with CPANPLUS
-
-C<CPANPLUS> apparently does some weird things, and since it is still
-young and not part of the Standard Library, C<Test::Prereq>'s tests do
-not do the right thing under it (for some reason). C<Test::Prereq>
-cheats by ignoring C<CPANPLUS> completely in the tests---at least
-until someone has a better solution. If you do not like that, you can
-set C<$EXCLUDE_CPANPLUS> to a false value.
-
-You should be able to do a 'make test' manually to make everything
-work, though.
 
 =head2 Warning about redefining ExtUtils::MakeMaker::WriteMakefile
 
@@ -121,22 +78,18 @@ $VERSION = '1.039';
 use Carp qw(carp);
 use ExtUtils::MakeMaker;
 use File::Find;
-use Module::CoreList;
-use Module::Info;
+use Module::Extract::Use;
 use Test::Builder;
 use Test::More;
 
 my $Test = Test::Builder->new;
-
-my $Namespace = '';
 
 $EXCLUDE_CPANPLUS = 1;
 
 {
 no warnings;
 
-* ExtUtils::MakeMaker::WriteMakefile = sub
-	{
+* ExtUtils::MakeMaker::WriteMakefile = sub {
 	my %hash = @_;
 
 	my $name = $hash{NAME};
@@ -144,7 +97,6 @@ no warnings;
 		map { defined $_ ? %$_ : () }
 		@hash{qw(PREREQ_PM BUILD_REQUIRES CONFIGURE_REQUIRES TEST_REQUIRES)};
 
-	$Namespace = $name;
 	@Test::Prereq::prereqs   = sort keys %prereqs;
 
 	1;
@@ -190,21 +142,17 @@ distributions with CPAN.pm takes forever.
 If you want the old behavior, set the C<TEST_PREREQ_EXPAND_WITH_CPAN>
 environment variable to a true value.
 
-
-
 =cut
 
 my $default_version = $];
 my $version         = $];
 
-sub prereq_ok
-	{
+sub prereq_ok {
 	$Test->plan( tests => 1 ) unless $Test->has_plan;
 	__PACKAGE__->_prereq_check( @_ );
 	}
 
-sub import
-	{
+sub import {
     my $self   = shift;
     my $caller = caller;
     no strict 'refs';
@@ -214,27 +162,20 @@ sub import
     $Test->plan(@_);
 	}
 
-sub _prereq_check
-	{
+sub _prereq_check {
 	my $class   = shift;
 
-	   $version  = shift || $default_version;
-	my $name     = shift || 'Prereq test';
-	my $skip     = shift || [];
+	my $name     = shift // 'Prereq test';
+	my $skip     = shift // [];
 
-	$version = $default_version unless
-		exists $Module::CoreList::version{$version};
-
-	unless( ref $skip eq ref [] )
-		{
-		carp( 'Third parameter to prereq_ok must be an array reference!' );
+	unless( ref $skip eq ref [] ) {
+		carp( 'The second parameter to prereq_ok must be an array reference!' );
 		return;
 		}
 
 	# get the declared prereqs from the Makefile.PL
 	my $prereqs = $class->_get_prereqs();
-	unless( $prereqs )
-		{
+	unless( $prereqs ) {
 		$class->_not_ok( "\t" .
 			$class->_master_file . " did not return a true value.\n" );
 		return 0;
@@ -242,8 +183,7 @@ sub _prereq_check
 
 	my $loaded  = $class->_get_loaded_modules();
 
-	unless( $loaded )
-		{
+	unless( $loaded ) {
 		$class->_not_ok( "\tCouldn't look up the modules for some reasons.\n" ,
 			"\tDo the blib/lib and t directories exist?\n",
 			);
@@ -251,68 +191,46 @@ sub _prereq_check
 		}
 
 	# remove modules found in PREREQ_PM
-	foreach my $module ( @$prereqs )
-		{
+	foreach my $module ( @$prereqs ) {
 		delete $loaded->{$module};
 		}
 
 	# remove modules found in distribution
 	my $distro = $class->_get_dist_modules( 'blib/lib' );
-	foreach my $module ( @$distro )
-		{
+	foreach my $module ( $distro->@* ) {
 		delete $loaded->{$module};
 		}
 
 	# remove modules found in test directory
 	$distro = $class->_get_test_libraries();
-	foreach my $module ( @$distro )
-		{
+	foreach my $module ( $distro->@* ) {
 		delete $loaded->{$module};
 		}
 
 	# remove modules in the skip array
-	foreach my $module ( @$skip )
-		{
+	foreach my $module ( $skip->@* ) {
 		delete $loaded->{$module};
 		}
 
-	# if anything is left, look for modules in the distributions
-	# in PREREQ_PM.  this is slow, so we should only do it if
-	# we might need it.
-	if( keys %$loaded and $class->_should_i_expand_prereqs )
-		{
-		my $modules = $class->_get_from_prereqs( $prereqs );
-
-		foreach my $module ( @$modules )
-			{
-			delete $loaded->{$module};
-			}
-		}
-
-	if( $EXCLUDE_CPANPLUS )
-		{
-		foreach my $module ( keys %$loaded )
-			{
+	if( $EXCLUDE_CPANPLUS ) {
+		foreach my $module ( keys %$loaded ) {
 			next unless $module =~ m/^CPANPLUS::/;
 			delete $loaded->{$module};
 			}
 		}
 
-	if( keys %$loaded ) # stuff left in %loaded, oops!
-		{
+	if( keys %$loaded ) { # stuff left in %loaded, oops!
 		$class->_not_ok( "Found some modules that didn't show up in PREREQ_PM or *_REQUIRES\n",
 			map { "\t$_\n" } sort keys %$loaded );
 		}
-	else
-		{
+	else {
 		$Test->ok( 1, $name );
 		}
 
 	return 1;
 	}
 
-sub _not_ok
-	{
+sub _not_ok {
 	my( $self, $name, @message ) = @_;
 
 	$Test->ok( 0, $name );
@@ -321,8 +239,7 @@ sub _not_ok
 
 sub _master_file { 'Makefile.PL' }
 
-sub _get_prereqs
-	{
+sub _get_prereqs {
 	my $class = shift;
 	my $file = $class->_master_file;
 
@@ -331,8 +248,7 @@ sub _get_prereqs
 	{
 	local $^W = 0;
 
-	unless( do "./$file" )
-		{
+	unless( do "./$file" ) {
 		print STDERR "_get_prereqs: Error loading $file: $@\n";
 		return;
 		}
@@ -344,38 +260,8 @@ sub _get_prereqs
 	return \@modules;
 	}
 
-# expand prereqs and see what we get
-
-sub _should_i_expand_prereqs { !! $ENV{TEST_PREREQ_EXPAND_WITH_CPAN} }
-
-sub _get_from_prereqs
-	{
-	my $class   = shift;
-	my $modules = shift;
-
-	my @dist_modules = ();
-	return [] unless $class->_should_i_expand_prereqs;
-
-	require CPAN;
-	foreach my $module ( @$modules )
-		{
-		my $mod      = CPAN::Shell->expand( "Module", $module );
-		next unless ref $mod;
-
-		my $distfile = $mod->cpan_file;
-		my $dist     = CPAN::Shell->expand( "Distribution", $distfile );
-
-		my @found    = $dist->containsmods;
-
-		push @dist_modules, @found;
-		}
-
-	return \@dist_modules;
-	}
-
 # get all the loaded modules.  we'll filter this later
-sub _get_loaded_modules
-	{
+sub _get_loaded_modules {
 	my $class = shift;
 
 #	return unless( defined $_[0] and defined $_[1] );
@@ -391,16 +277,14 @@ sub _get_loaded_modules
 		if -e 'blib/script';
 
 	my @found = ();
-	foreach my $file ( @libs, @t, @scripts )
-		{
+	foreach my $file ( @libs, @t, @scripts ) {
 		push @found, @{ $class->_get_from_file( $file ) };
 		}
 
 	return { map { $_, 1 } @found };
 	}
 
-sub _get_test_libraries
-	{
+sub _get_test_libraries {
 	my $class = shift;
 
 	my $dirsep = "/";
@@ -423,8 +307,7 @@ sub _get_test_libraries
 	return \@files;
 	}
 
-sub _get_dist_modules
-	{
+sub _get_dist_modules {
 	my $class = shift;
 
 	return unless( defined $_[0] and -d $_[0] );
@@ -448,21 +331,13 @@ sub _get_dist_modules
 	return \@files;
 	}
 
-sub _get_from_file
-	{
+sub _get_from_file {
+	state $extor = Module::Extract::Use->new;
 	my( $class, $file ) = @_;
 
-	my $module  = Module::Info->new_from_file( $file );
-	$module->die_on_compilation_error(1);
+	my $module  = $extor->get_modules_with_details( $file );
 
-	my @used    = eval{ $module->modules_used };
-
-	my @modules =
-		sort
-		grep { not exists $Module::CoreList::version{$version}{$_} }
-		@used;
-
-	@modules = grep { not /$Namespace/ } @modules if $Namespace;
+	my @modules = map { $_->module } $module->@*;
 
 	return \@modules;
 	}
@@ -471,9 +346,13 @@ sub _get_from_file
 
 =head1 TO DO
 
-* set up a couple fake module distributions to test
+=over 4
 
-* warn about things that show up in C<PREREQ_PM> unnecessarily
+=item * set up a couple fake module distributions to test
+
+=item * warn about things that show up in C<PREREQ_PM> unnecessarily
+
+=back
 
 =head1 SOURCE AVAILABILITY
 

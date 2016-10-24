@@ -44,7 +44,7 @@ my $github    = 'https://github.com/briandfoy/test-prereq';
 my $main_file = catfile( 'lib', split /::/, "$module.pm" );
 
 my %WriteMakefile = (
-	'MIN_PERL_VERSION' => '5.010',
+	'MIN_PERL_VERSION' => '5.022',
 
 	'NAME'          => $module,
 	'ABSTRACT_FROM' => $main_file,
@@ -67,8 +67,17 @@ my %WriteMakefile = (
 		},
 
 	'PREREQ_PM'	    => {
-		'Module::CoreList'       => '0',
-		'Module::Info'           => '0',
+		'Module::Extract::Use'   => '0',
+		'Carp'                   => '0',
+		'Cwd'                    => '0',
+		'File::Find'             => '0',
+		'Module::Build'          => '0',
+		'base'                   => '0',
+		'lib'                    => '0',
+		'strict'                 => '0',
+		'utf8'                   => '0',
+		'vars'                   => '0',
+		'warnings'               => '0',
 		},
 
 	'META_MERGE' => {
