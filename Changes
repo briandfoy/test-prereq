@@ -1,5 +1,12 @@
 Revision history for Perl module Test::Prereq
 
+2.001_001 2016-10-24T04:12:51Z
+	* Big changes:
+	+ No more filtering out core modules (some things are ejected from core!)
+	+ Switched from Module::Info to Module::Extract::Use
+	+ Switched from old Test::Builder to Test::Builder::Module from the
+	new Test::Simple stuff.
+
 1.039 2015-08-08T07:39:45Z
 	* Bump to stable version
 
