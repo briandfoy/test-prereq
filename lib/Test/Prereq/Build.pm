@@ -23,9 +23,8 @@ Test::Prereq::Build - test prerequisites in Module::Build scripts
 $VERSION = '2.001';
 
 use Module::Build;
-use Test::Builder;
 
-my $Test = Test::Builder->new;
+my $Test = __PACKAGE__->builder;
 
 =head1 METHODS
 

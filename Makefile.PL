@@ -61,7 +61,6 @@ my %WriteMakefile = (
 		},
 
 	'TEST_REQUIRES' => {
-		'Test::Builder'          => '0',
 		'Test::Builder::Tester'  => '0',
 		'Test::More'             => '0.95',
 		},
@@ -70,9 +69,9 @@ my %WriteMakefile = (
 		'Module::Extract::Use'   => '0',
 		'Carp'                   => '0',
 		'Cwd'                    => '0',
-		'Exporter'               => '0',
 		'File::Find'             => '0',
 		'Module::Build'          => '0',
+		'Test::Builder::Module'  => '0',
 		'lib'                    => '0',
 		'parent'                 => '0',
 		'strict'                 => '0',

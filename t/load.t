@@ -1,11 +1,11 @@
-BEGIN {
-	@classes = qw(Test::Prereq Test::Prereq::Build);
-	}
+use Test::More 1.00;
 
-use Test::More tests => 2 * scalar @classes;
+my @classes = qw(Test::Prereq Test::Prereq::Build);
 
 foreach my $class ( @classes ) {
 	undef &main::prereq_ok;
 	BAIL_OUT( "Could not compile $class!" ) unless use_ok( $class );
 	ok( defined &main::prereq_ok, "prereq_ok imported" );
 	}
+
+done_testing();

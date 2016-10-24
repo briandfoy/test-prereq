@@ -4,12 +4,11 @@ use Test::Prereq;
 
 my @prereq_files = sort qw(
 	Carp
-	Exporter
 	ExtUtils::MakeMaker
 	File::Find
 	Module::Extract::Use
-	Test::Builder
-	Test::More
+	Test::Builder::Module
+	parent
 	strict
 	vars
 	warnings
@@ -40,9 +39,8 @@ sub from_file {
 	my( $file ) = @_;
 
 	my $modules = Test::Prereq->_get_from_file( $file );
-	my @modules = grep ! /^CPANPLUS/, @$modules;
 
-	return \@modules;
+	return $modules;
 	}
 
 done_testing();

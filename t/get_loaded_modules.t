@@ -9,12 +9,11 @@ subtest 'modules' => sub {
 	my @expected = sort qw(
 		Carp
 		Cwd
-		Exporter
 		ExtUtils::MakeMaker
 		File::Find
 		Module::Build
 		Module::Extract::Use
-		Test::Builder
+		Test::Builder::Module
 		Test::More
 		Test::Prereq
 		Test::Prereq::Build
@@ -28,7 +27,7 @@ subtest 'modules' => sub {
 
 	is_deeply( \@keys, \@expected, 'Right modules for modules and tests' )
 		or
-	diag( "Didn't find right modules!\n\tFound < @$keys >\n\tExpected < @expected >\n" );
+	diag( "Didn't find right modules!\n\tFound < @keys >\n\tExpected < @expected >\n" );
 	};
 
 done_testing();

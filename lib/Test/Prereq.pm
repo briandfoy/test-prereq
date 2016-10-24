@@ -1,4 +1,6 @@
 package Test::Prereq;
+use parent qw(Test::Builder::Module);
+
 use strict;
 use utf8;
 
@@ -75,14 +77,11 @@ $VERSION = '2.001';
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);
-use Exporter qw(import);
 use ExtUtils::MakeMaker;
 use File::Find;
 use Module::Extract::Use;
-use Test::Builder;
-use Test::More;
 
-my $Test = Test::Builder->new;
+my $Test = __PACKAGE__->builder;
 
 {
 no warnings;
@@ -95,7 +94,7 @@ no warnings;
 		map { defined $_ ? %$_ : () }
 		@hash{qw(PREREQ_PM BUILD_REQUIRES CONFIGURE_REQUIRES TEST_REQUIRES)};
 
-	@Test::Prereq::prereqs   = sort keys %prereqs;
+	@Test::Prereq::prereqs = sort keys %prereqs;
 
 	1;
 	}
@@ -333,9 +332,22 @@ sub _get_from_file {
 	state $extor = Module::Extract::Use->new;
 	my( $class, $file ) = @_;
 
-	my $module  = $extor->get_modules_with_details( $file );
+	my $modules  = $extor->get_modules_with_details( $file );
 
-	my @modules = map { $_->module } $module->@*;
+	# We also depend on the super classes, which might not be
+	# part of the distro
+	my @imports =
+		map {
+			state $can_import = { map { $_, 1 } qw(base parent) };
+			exists $can_import->{$_->module}
+				?
+			$_->imports->@*
+				:
+				();
+			} $modules->@*;
+
+	my @modules = map { $_->module } $modules->@*;
+	push @modules, @imports;
 
 	return \@modules;
 	}

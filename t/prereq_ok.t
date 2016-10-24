@@ -1,7 +1,6 @@
-use Test::More;
-use Test::Prereq;
+use Test::More 1.00;
 
-diag( "Testing Perl version -> $]" );
+BEGIN { use_ok "Test::Prereq" }
 
 subtest no_ignore => sub {
 	my @ignore = ();
