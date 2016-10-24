@@ -6,7 +6,25 @@ subtest 'modules' => sub {
 	my $modules = Test::Prereq->_get_loaded_modules();
 	my @keys = sort keys %$modules;
 
-	my @expected = sort qw( Carp Cwd ExtUtils::MakeMaker File::Find Module::Build Module::Extract::Use Test::Builder Test::More Test::Prereq Test::Prereq::Build base lib strict utf8 vars warnings );
+	my @expected = sort qw(
+		Carp
+		Cwd
+		Exporter
+		ExtUtils::MakeMaker
+		File::Find
+		Module::Build
+		Module::Extract::Use
+		Test::Builder
+		Test::More
+		Test::Prereq
+		Test::Prereq::Build
+		lib
+		parent
+		strict
+		utf8
+		vars
+		warnings
+		);
 
 	is_deeply( \@keys, \@expected, 'Right modules for modules and tests' )
 		or

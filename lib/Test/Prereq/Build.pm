@@ -1,7 +1,7 @@
 package Test::Prereq::Build;
 use strict;
 
-use base qw(Test::Prereq);
+use parent qw(Test::Prereq);
 use vars qw($VERSION @EXPORT);
 
 use warnings;
@@ -20,7 +20,7 @@ Test::Prereq::Build - test prerequisites in Module::Build scripts
 
 =cut
 
-$VERSION = '1.039';
+$VERSION = '2.001';
 
 use Module::Build;
 use Test::Builder;
@@ -65,13 +65,13 @@ it under the same terms as Perl itself.
 =cut
 
 
-sub import 
+sub import
 	{
 	my $self   = shift;
 	my $caller = caller;
 	no strict 'refs';
 	*{$caller.'::prereq_ok'}       = \&prereq_ok;
-	
+
 	$Test->exported_to($caller);
 	$Test->plan(@_);
 	}
@@ -85,8 +85,7 @@ sub prereq_ok
 sub _master_file { 'Build.PL' }
 
 # override Module::Build
-sub Module::Build::new
-	{
+sub Module::Build::new {
 	my $class = shift;
 
 	my %hash = @_;

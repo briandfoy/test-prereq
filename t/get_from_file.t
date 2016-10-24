@@ -2,14 +2,14 @@ use Test::More 0.95;
 
 use Test::Prereq;
 
-my @prereq_files = qw(
+my @prereq_files = sort qw(
 	Carp
+	Exporter
 	ExtUtils::MakeMaker
 	File::Find
 	Module::Extract::Use
 	Test::Builder
 	Test::More
-	base
 	strict
 	vars
 	warnings
@@ -29,7 +29,7 @@ foreach my $test ( @tests ) {
 	subtest pod => sub {
 		my @modules = sort @{ from_file( $file ) };
 
-		diag "Did not find right modules for $file!\nFound <@$modules>\n"
+		diag "Did not find right modules for $file!\nFound <@modules>\n"
 			unless is_deeply( \@modules, $expected,
 					"Found the expected modules for $file"
 					);

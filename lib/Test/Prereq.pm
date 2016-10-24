@@ -67,15 +67,15 @@ about this.
 
 =cut
 
-use base qw(Exporter);
 use vars qw($VERSION $EXCLUDE_CPANPLUS @EXPORT @prereqs);
 
 
-$VERSION = '1.039';
+$VERSION = '2.001';
 
 @EXPORT = qw( prereq_ok );
 
 use Carp qw(carp);
+use Exporter qw(import);
 use ExtUtils::MakeMaker;
 use File::Find;
 use Module::Extract::Use;
@@ -83,8 +83,6 @@ use Test::Builder;
 use Test::More;
 
 my $Test = Test::Builder->new;
-
-$EXCLUDE_CPANPLUS = 1;
 
 {
 no warnings;
