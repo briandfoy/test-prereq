@@ -5,6 +5,8 @@ use strict;
 use utf8;
 
 use v5.22;
+use feature qw(postderef);
+no warnings qw(experimental::postderef);
 
 use warnings;
 no warnings;
