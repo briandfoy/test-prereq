@@ -10,7 +10,6 @@ MANIFEST.SKIP
 META.yml
 README.pod
 t/get_from_file.t
-t/get_from_prereqs.t
 t/get_loaded_modules.t
 t/get_prereqs.t
 t/import.t
