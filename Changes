@@ -1,5 +1,9 @@
 Revision history for Perl module Test::Prereq
 
+2.001_002 2016-10-28T00:42:22Z
+	* Fix postderef. I specified v5.22, but it was still experimental then.
+	Identified by Slaven ReziÄ (https://github.com/briandfoy/test-prereq/issues/14)
+
 2.001_001 2016-10-24T04:12:51Z
 	* Big changes:
 	+ No more filtering out core modules (some things are ejected from core!)
