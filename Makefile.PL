@@ -72,6 +72,7 @@ my %WriteMakefile = (
 		'File::Find'             => '0',
 		'Module::Build'          => '0',
 		'Test::Builder::Module'  => '0',
+		'feature'                => '0',
 		'lib'                    => '0',
 		'parent'                 => '0',
 		'strict'                 => '0',

@@ -17,6 +17,7 @@ subtest 'modules' => sub {
 		Test::More
 		Test::Prereq
 		Test::Prereq::Build
+		feature
 		lib
 		parent
 		strict

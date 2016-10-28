@@ -8,6 +8,7 @@ my @prereq_files = sort qw(
 	File::Find
 	Module::Extract::Use
 	Test::Builder::Module
+	feature
 	parent
 	strict
 	vars
