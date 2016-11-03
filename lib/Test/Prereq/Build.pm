@@ -92,6 +92,7 @@ sub Module::Build::new {
 	my @requires = sort grep $_ ne 'perl', (
 		keys %{ $hash{requires} },
 		keys %{ $hash{build_requires} },
+		keys %{ $hash{test_requires} },
 		keys %{ $hash{configure_requires} },
 		keys %{ $hash{recommends} },
 		);
