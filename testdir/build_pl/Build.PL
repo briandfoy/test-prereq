@@ -23,14 +23,17 @@ my $build = $class->new(
 	recommends => {
 		'Test::Manifest'         => '2.00',
 		},
-		
+
 	build_requires => {
 		'perl'                   => '5.010',
 		'Test::Builder'          => '0',
 		'Test::Builder::Tester'  => '0',
+		},
+
+	test_requires => {
 		'Test::More'             => '0',
 		},
-		
+
 	requires       => {
 		'Module::Build'          => '0',
 		'Module::CoreList'       => '0',
