@@ -74,7 +74,7 @@ about this.
 use vars qw($VERSION $EXCLUDE_CPANPLUS @EXPORT @prereqs);
 
 
-$VERSION = '2.001_002';
+$VERSION = '2.002';
 
 @EXPORT = qw( prereq_ok );
 

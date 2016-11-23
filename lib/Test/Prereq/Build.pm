@@ -20,7 +20,7 @@ Test::Prereq::Build - test prerequisites in Module::Build scripts
 
 =cut
 
-$VERSION = '2.001_002';
+$VERSION = '2.002';
 
 use Module::Build;
 
