@@ -1,5 +1,8 @@
 Revision history for Perl module Test::Prereq
 
+2.002 2016-11-23T22:03:31Z
+	* Support test_requires in Module::Build (Sam Brightman, GitHub #15)
+
 2.001_002 2016-10-28T00:42:22Z
 	* Fix postderef. I specified v5.22, but it was still experimental then.
 	Identified by Slaven ReziÄ (https://github.com/briandfoy/test-prereq/issues/14)
