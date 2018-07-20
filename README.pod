@@ -13,7 +13,7 @@ for any Perl module.
 
 To read about L<Test::Prereq>, look at the embedded documentation
 in the module itself. Inside the distribution, you can format it
-with L<perldoc|http://perldoc.perl.org/perldoc.html>:
+with L<perldoc|https://perldoc.perl.orgperldoc.html>:
 
 	% perldoc lib/Test/Prereq.pm
 
@@ -23,7 +23,7 @@ name instead of the file location:
 	% perldoc Test::Prereq
 
 You can read the documentation and inspect the meta data at
-L<MetaCPAN|http://www.metacpan.org/module/Test::Prereq>.
+L<MetaCPAN|https://metacpan.org/pod/Test::Prereq>.
 
 The standard module documentation has example uses in the SYNOPSIS
 section, but you can also look in the I<examples/> directory (if it's
