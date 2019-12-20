@@ -124,19 +124,19 @@ Valid versions come from C<Module::CoreList> (which uses C<$]>).
 	use Module::CoreList;
 	print map "$_\n", sort keys %Module::CoreList::version;
 
-C<prereq_ok> attempts to remove modules found in F<lib/> and
-libraries found in F<t/> from the reported prerequisites.
+C<prereq_ok> attempts to remove modules found in F<lib/> and libraries
+found in F<t/> from the reported prerequisites.
 
-The optional third argument is an array reference to a list
-of names that C<prereq_ok> should ignore. You might want to use
-this if your tests do funny things with C<require>.
+The optional third argument is an array reference to a list of names
+that C<prereq_ok> should ignore. You might want to use this if your
+tests do funny things with C<require>.
 
 Versions prior to 1.038 would use CPAN.pm to virtually include
-prerequisites in distributions that you declared explicitly. This isn't
-really a good idea. Some modules have moved to different distributions,
-so you should just specify all the modules that you use instead of relying
-on a particular distribution to provide them. Not only that, expanding
-distributions with CPAN.pm takes forever.
+prerequisites in distributions that you declared explicitly. This
+isn't really a good idea. Some modules have moved to different
+distributions, so you should just specify all the modules that you use
+instead of relying on a particular distribution to provide them. Not
+only that, expanding distributions with CPAN.pm takes forever.
 
 If you want the old behavior, set the C<TEST_PREREQ_EXPAND_WITH_CPAN>
 environment variable to a true value.
