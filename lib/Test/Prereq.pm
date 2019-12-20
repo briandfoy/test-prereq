@@ -348,8 +348,11 @@ sub _get_from_file {
 				();
 			} $modules->@*;
 
-	my @modules = map { $_->module } $modules->@*;
-	push @modules, @imports;
+	my @modules =
+		grep { state %Seen; ! $Seen{$_}++ } (
+			@imports,
+			map { $_->module } $modules->@*
+			);
 
 	return \@modules;
 	}
