@@ -25,9 +25,6 @@ Test::Prereq - check if Makefile.PL has the right pre-requisites
 	plan skip_all => "Test::Prereq required to test dependencies" if $@;
 	prereq_ok();
 
-	# specify a perl version, test name, or module names to skip
-	prereq_ok( $version, $name, \@skip );
-
 	# if you use Module::Build
 	use Test::More;
 	eval "use Test::Prereq::Build";
@@ -108,15 +105,11 @@ no warnings;
 
 =over 4
 
-=item prereq_ok( [ VERSION, [ NAME [, SKIP_ARRAY] ] ] )
+=item prereq_ok( [ NAME [, SKIP_ARRAY] ] )
 
 Tests F<Makefile.PL> to ensure all non-core module dependencies are in
 C<PREREQ_PM>. If you haven't set a testing plan already,
 C<prereq_ok()> creates a plan of one test.
-
-If you don't specify a version, C<prereq_ok> assumes you want to compare
-the list of prerequisite modules to the version of perl running the
-test.
 
 Valid versions come from C<Module::CoreList> (which uses C<$]>).
 
