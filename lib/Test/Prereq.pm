@@ -376,11 +376,11 @@ Andy Lester, Slavin Rezić, Randal Schwartz, Iain Truskett, Dylan Martin
 
 =head1 AUTHOR
 
-brian d foy, C<< <bdfoy@cpan.org> >>
+brian d foy, C<< <briandfoy@pobox.com> >>
 
 =head1 COPYRIGHT and LICENSE
 
-Copyright © 2002-2021, brian d foy <bdfoy@cpan.org>. All rights reserved.
+Copyright © 2002-2025, brian d foy <briandfoy@pobox.com>. All rights reserved.
 This software is available under the Artistic License 2.
 
 =cut
