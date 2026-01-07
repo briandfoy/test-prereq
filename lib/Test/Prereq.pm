@@ -380,7 +380,7 @@ brian d foy, C<< <briandfoy@pobox.com> >>
 
 =head1 COPYRIGHT and LICENSE
 
-Copyright © 2002-2025, brian d foy <briandfoy@pobox.com>. All rights reserved.
+Copyright © 2002-2026, brian d foy <briandfoy@pobox.com>. All rights reserved.
 This software is available under the Artistic License 2.
 
 =cut
